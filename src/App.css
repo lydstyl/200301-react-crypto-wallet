@@ -1,0 +1,8 @@
+li span.remove-asset {
+  display: none;
+  color: red;
+}
+
+li:hover span.remove-asset {
+  display: inline;
+}
