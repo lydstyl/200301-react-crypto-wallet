@@ -1,6 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
+import { StoreProvider } from 'easy-peasy';
+import { store } from './store/store';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import './index.css';
+
+ReactDOM.render(
+  <StoreProvider store={store}>
+    <App />
+  </StoreProvider>,
+  document.getElementById('root')
+);

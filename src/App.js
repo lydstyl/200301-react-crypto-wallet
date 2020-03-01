@@ -1,13 +1,19 @@
 import React from 'react';
+
+import { AddAsset } from './components/AddAsset/AddAsset';
+import { Assets } from './components/Assets/Assets';
+import { WalletGraph } from './components/WalletGraph/WalletGraph';
+import { HistoryGraph } from './components/HistoryGraph/HistoryGraph';
+
 import './App.css';
 
 function App() {
   return (
     <div className='App'>
-      <div className='add-asset'>add-asset</div>
-      <div className='assets'>assets</div>
-      <div className='wallet-graph'>wallet-graph</div>
-      <div className='history'>history</div>
+      <AddAsset />
+      <Assets />
+      <WalletGraph />
+      <HistoryGraph />
     </div>
   );
 }
