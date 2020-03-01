@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
@@ -7,16 +7,21 @@ export const WalletGraph = () => {
   const assets = useStoreState(state => state.wallet.assets);
   const setAssets = useStoreActions(actions => actions.wallet.removeAsset);
 
+  const [usdValues, setUsdValues] = useState([10, 20, 30]);
+  const [labels, setLabels] = useState(['USD', 'BTC', 'ETH']);
+
   // https://www.chartjs.org/docs/latest/charts/doughnut.html
   const data = {
     datasets: [
       {
-        data: [10, 20, 30]
+        // data: [10, 20, 30]
+        data: usdValues
       }
     ],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: ['USD', 'BTC', 'ETH']
+    // labels: ['USD', 'BTC', 'ETH']
+    labels: labels
   };
 
   useEffect(() => {
@@ -41,9 +46,17 @@ export const WalletGraph = () => {
           assets[symbol].usdValue = usdValue;
         });
 
+        const usdVals = [];
+
         Object.keys(assets).forEach(asset => {
           assets[asset].percent = assets[asset].usdValue / totalUsdValue;
+
+          usdVals.push(assets[asset].usdValue);
         });
+
+        setLabels(Object.keys(assets));
+
+        setUsdValues(usdVals);
 
         document.querySelector('pre.json-wallet').innerText = JSON.stringify(
           assets,
@@ -52,6 +65,18 @@ export const WalletGraph = () => {
         );
 
         setAssets(assets);
+
+        const labels = [];
+        const usdValues = [];
+        Object.keys(assets).forEach(asset => {
+          labels.push(asset);
+
+          console.log(assets[asset]);
+
+          usdValues.push(assets[asset].usdValue);
+        });
+
+        console.log(assets, usdValues, labels);
       })
       .catch(err => {
         console.log(err);
@@ -60,8 +85,8 @@ export const WalletGraph = () => {
 
   return (
     <>
-      <pre className='json-wallet'></pre>
-      <pre className='json-wallet'></pre>
+      {/* <pre className='json-wallet'></pre>
+      <pre className='json-wallet'></pre> */}
       <div className='wallet-graph'>
         <Doughnut data={data} />
       </div>
