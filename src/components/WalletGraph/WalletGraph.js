@@ -5,81 +5,46 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export const WalletGraph = () => {
   const assets = useStoreState(state => state.wallet.assets);
-  const setAssets = useStoreActions(actions => actions.wallet.removeAsset);
-  const setCurrentTotal = useStoreActions(
-    actions => actions.wallet.setCurrentTotal
+
+  const updateAssetsWithPrices = useStoreActions(
+    actions => actions.wallet.updateAssetsWithPrices
   );
 
-  const [usdValues, setUsdValues] = useState([10, 20, 30]);
-  const [labels, setLabels] = useState(['USD', 'BTC', 'ETH']);
+  console.log('1 assetsddd', assets);
 
-  // https://www.chartjs.org/docs/latest/charts/doughnut.html
-  const data = {
-    datasets: [
-      {
-        // data: [10, 20, 30]
-        data: usdValues
-      }
-    ],
+  updateAssetsWithPrices(assets);
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    // labels: ['USD', 'BTC', 'ETH']
-    labels: labels
-  };
+  // const setAssets = useStoreActions(actions => actions.wallet.removeAsset);
+  // const setCurrentTotal = useStoreActions(
+  //   actions => actions.wallet.setCurrentTotal
+  // );
 
-  useEffect(() => {
-    let totalUsdValue = 0;
+  // const [usdValues, setUsdValues] = useState([10, 20, 30]);
+  // const [labels, setLabels] = useState(['USD', 'BTC', 'ETH']);
 
-    fetch('https://api.coincap.io/v2/assets')
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        data = data.data.filter(crypto =>
-          Object.keys(assets).includes(crypto.symbol)
-        );
+  // const [datas, setDatas] = useState({});
+  const [data, setData] = useState(
+    // https://www.chartjs.org/docs/latest/charts/doughnut.html
+    {
+      datasets: [
+        {
+          data: [10, 20, 40]
+          // data: usdValues
+        }
+      ],
 
-        data.forEach(asset => {
-          const symbol = asset.symbol;
-          const priceUsd = parseFloat(asset.priceUsd);
-          const balance = assets[asset.symbol].balance;
-          const usdValue = priceUsd * balance;
-          totalUsdValue += usdValue;
-          assets[symbol].price = priceUsd;
-          assets[symbol].usdValue = usdValue;
-        });
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: ['USD', 'BTC', 'ETH']
+      // labels: labels
+    }
+  );
 
-        const usdVals = [];
-
-        Object.keys(assets).forEach(asset => {
-          assets[asset].percent = assets[asset].usdValue / totalUsdValue;
-
-          usdVals.push(assets[asset].usdValue);
-        });
-
-        setCurrentTotal(totalUsdValue); // totalUsdValue to the store
-
-        setLabels(Object.keys(assets));
-
-        setUsdValues(usdVals);
-
-        setAssets(assets);
-
-        const labels = [];
-        const usdValues = [];
-        Object.keys(assets).forEach(asset => {
-          labels.push(asset);
-
-          usdValues.push(assets[asset].usdValue);
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [assets, setAssets]);
+  // useEffect(() => {}, [assets, setAssets]);
 
   return (
     <div className='wallet-graph'>
+      {/* <pre>{JSON.stringify(datas, null, 4)}</pre>
+      <pre>{JSON.stringify(data, null, 4)}</pre> */}
       <Doughnut data={data} />
     </div>
   );
