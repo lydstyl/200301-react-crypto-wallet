@@ -21,10 +21,5 @@ export const Assets = () => {
     </li>
   ));
 
-  return (
-    <>
-      <ul className='assets'>{domAssets}</ul>
-      <button>Save in history</button>
-    </>
-  );
+  return <ul className='assets'>{domAssets}</ul>;
 };

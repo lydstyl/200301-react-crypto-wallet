@@ -6,6 +6,9 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 export const WalletGraph = () => {
   const assets = useStoreState(state => state.wallet.assets);
   const setAssets = useStoreActions(actions => actions.wallet.removeAsset);
+  const setCurrentTotal = useStoreActions(
+    actions => actions.wallet.setCurrentTotal
+  );
 
   const [usdValues, setUsdValues] = useState([10, 20, 30]);
   const [labels, setLabels] = useState(['USD', 'BTC', 'ETH']);
@@ -54,15 +57,11 @@ export const WalletGraph = () => {
           usdVals.push(assets[asset].usdValue);
         });
 
+        setCurrentTotal(totalUsdValue); // totalUsdValue to the store
+
         setLabels(Object.keys(assets));
 
         setUsdValues(usdVals);
-
-        document.querySelector('pre.json-wallet').innerText = JSON.stringify(
-          assets,
-          null,
-          4
-        );
 
         setAssets(assets);
 
@@ -71,12 +70,8 @@ export const WalletGraph = () => {
         Object.keys(assets).forEach(asset => {
           labels.push(asset);
 
-          console.log(assets[asset]);
-
           usdValues.push(assets[asset].usdValue);
         });
-
-        console.log(assets, usdValues, labels);
       })
       .catch(err => {
         console.log(err);
@@ -84,12 +79,8 @@ export const WalletGraph = () => {
   }, [assets, setAssets]);
 
   return (
-    <>
-      {/* <pre className='json-wallet'></pre>
-      <pre className='json-wallet'></pre> */}
-      <div className='wallet-graph'>
-        <Doughnut data={data} />
-      </div>
-    </>
+    <div className='wallet-graph'>
+      <Doughnut data={data} />
+    </div>
   );
 };
