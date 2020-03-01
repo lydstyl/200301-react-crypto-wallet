@@ -14,7 +14,10 @@ export const store = createStore({
       state.assets[payload.symbol.toUpperCase()] = { balance: payload.balance };
     }),
     removeAsset: action((state, payload) => {
-      delete state.assets[payload.toUpperCase()];
+      delete state.assets[payload];
+    }),
+    setAssets: action((state, payload) => {
+      state.assets = payload;
     })
   }
 });
