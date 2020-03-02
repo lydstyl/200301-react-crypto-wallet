@@ -118,6 +118,15 @@ export const store = createStore({
 
       actions.updateAssetsWithPrices(payload.assets);
     }),
+    addOneAsset: thunk(async (actions, payload) => {
+      actions.addAsset(payload.toAdd);
+
+      payload.assets[payload.toAdd.symbol.toUpperCase()] = {
+        balance: payload.toAdd.balance
+      };
+
+      actions.updateAssetsWithPrices(payload.assets);
+    }),
     updateAssetsWithPrices: thunk(async (actions, payload) => {
       actions.setLoading(true);
 

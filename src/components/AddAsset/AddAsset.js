@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export const AddAsset = () => {
-  const addAsset = useStoreActions(actions => actions.wallet.addAsset);
   const [showButton, setShowButton] = useState(false);
   const [symbol, setSymbol] = useState('');
   const [balance, setBalance] = useState('');
+
+  const assets = useStoreState(state => state.wallet.assets);
+
+  const addOneAsset = useStoreActions(actions => actions.wallet.addOneAsset);
 
   const handleSymbolChange = event => {
     if (event.target.value.length > 2) {
@@ -23,7 +26,9 @@ export const AddAsset = () => {
   };
 
   const handleAddAsset = payload => {
-    addAsset(payload);
+    addOneAsset(payload);
+
+    // reset form
     setSymbol('');
     setBalance('');
 
@@ -55,7 +60,11 @@ export const AddAsset = () => {
 
       {showButton && (
         // <button onClick={() => addAsset({ symbol, balance })}>Add</button>
-        <button onClick={() => handleAddAsset({ symbol, balance })}>Add</button>
+        <button
+          onClick={() => handleAddAsset({ toAdd: { symbol, balance }, assets })}
+        >
+          Add
+        </button>
       )}
     </div>
   );
