@@ -3,6 +3,8 @@ import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export const Assets = () => {
+  const sortedAssets = useStoreState(state => state.wallet.sortedAssets);
+
   const assets = useStoreState(state => state.wallet.assets);
 
   const removeAsset = useStoreActions(actions => actions.wallet.removeAsset);
@@ -21,5 +23,10 @@ export const Assets = () => {
     </li>
   ));
 
-  return <ul className='assets'>{domAssets}</ul>;
+  return (
+    <>
+      <pre>{JSON.stringify(sortedAssets, null, 4)}</pre>
+      <ul className='assets'>{domAssets}</ul>
+    </>
+  );
 };

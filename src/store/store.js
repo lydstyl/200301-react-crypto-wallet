@@ -3,7 +3,14 @@ import { createStore, action, thunk } from 'easy-peasy';
 export const store = createStore({
   user: {},
   wallet: {
+    loading: false,
     currentTotal: 0,
+    walletGraphData: {
+      // https://www.chartjs.org/docs/latest/charts/doughnut.html
+      labels: [10, 20, 40],
+      numbers: ['USD', 'BTC', 'ETH']
+    },
+    notCounted: [],
     assets: {
       USD: { balance: 632 },
       BTC: { balance: 3.06225967 },
@@ -21,6 +28,7 @@ export const store = createStore({
       BTT: { balance: 500 },
       MAID: { balance: 0.09920723 }
     },
+    sortedAssets: { counted: [], notCounted: [] },
     history: [
       { date: 'date1', usdValue: 5 },
       { date: 'date2', usdValue: 8 },
@@ -40,9 +48,74 @@ export const store = createStore({
     setCurrentTotal: action((state, paylod) => {
       state.currentTotal = paylod;
     }),
+    setLoading: action((state, paylod) => {
+      state.loading = paylod;
+    }),
+    setSortedAssets: action((state, paylod) => {
+      const cryptos = Object.keys(paylod);
+      const sortedAssets = {
+        notCounted: [],
+        counted: []
+      };
+
+      cryptos.forEach(crypto => {
+        const { balance, usdPrice } = paylod[crypto];
+
+        if (usdPrice * 0 == 0) {
+          sortedAssets.counted.push({
+            label: crypto,
+            balance,
+            usdPrice,
+            usdValue: balance * usdPrice
+          });
+        } else {
+          sortedAssets.notCounted.push({
+            label: crypto,
+            balance
+          });
+        }
+      });
+
+      sortedAssets.counted.sort((a, b) => {
+        if (a.usdValue > b.usdValue) {
+          return -1;
+        }
+        if (b.usdValue > a.usdValue) {
+          return 1;
+        }
+        return 0;
+      });
+
+      state.sortedAssets = sortedAssets;
+    }),
+    addTotal: action((state, paylod) => {
+      let total = 0;
+
+      state.sortedAssets.counted.forEach(asset => {
+        total += asset.usdValue;
+      });
+
+      state.currentTotal = total;
+    }),
+    addWalletGraphData: action((state, paylod) => {
+      const walletGraphData = {
+        labels: [],
+        numbers: []
+      };
+
+      state.sortedAssets.counted.map(asset => {
+        const { label, usdValue } = asset;
+        walletGraphData.labels.push(label);
+        walletGraphData.numbers.push(usdValue);
+      });
+
+      state.walletGraphData = walletGraphData;
+    }),
 
     // thunks
     updateAssetsWithPrices: thunk(async (actions, payload) => {
+      actions.setLoading(true);
+
       let response = await fetch(`https://api.coincap.io/v2/assets`);
       let datas = await response.json();
 
@@ -65,6 +138,18 @@ export const store = createStore({
       });
 
       actions.setAssets(newAssets); // 👈 dispatch local actions to update state
+
+      actions.setSortedAssets(newAssets);
+
+      actions.addTotal();
+
+      actions.addWalletGraphData();
+
+      // actions.addCountedAndNot
+
+      //actions.addPercent();
+
+      actions.setLoading(false);
     })
   }
 });
