@@ -6,13 +6,14 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 export const WalletGraph = () => {
   const assets = useStoreState(state => state.wallet.assets);
 
-  const sortedAssets = useStoreState(state => state.wallet.sortedAssets);
+  // const sortedAssets = useStoreState(state => state.wallet.sortedAssets);
 
   let walletGraphData = useStoreState(state => state.wallet.walletGraphData);
   walletGraphData = {
     datasets: [
       {
-        data: walletGraphData.numbers
+        data: walletGraphData.numbers,
+        backgroundColor: walletGraphData.backgroundColor
       }
     ],
 

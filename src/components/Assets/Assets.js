@@ -19,7 +19,10 @@ export const Assets = () => {
   };
 
   const notCounted = sortedAssets.notCounted.map(asset => (
-    <li key={asset.label}>
+    <li
+      key={asset.label}
+      // style={{ borderBottom: `6px solid ${asset.randomColor}` }}
+    >
       <span className='remove-asset' onClick={handleRemoveAsset}>
         X
       </span>{' '}
@@ -29,7 +32,10 @@ export const Assets = () => {
   ));
 
   const counted = sortedAssets.counted.map(asset => (
-    <li key={asset.label}>
+    <li
+      key={asset.label}
+      style={{ borderBottom: `6px solid ${asset.randomColor}` }}
+    >
       <span className='remove-asset' onClick={handleRemoveAsset}>
         X
       </span>{' '}

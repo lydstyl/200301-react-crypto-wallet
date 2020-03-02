@@ -8,7 +8,8 @@ export const store = createStore({
     walletGraphData: {
       // https://www.chartjs.org/docs/latest/charts/doughnut.html
       labels: [10, 20, 40],
-      numbers: ['USD', 'BTC', 'ETH']
+      numbers: ['USD', 'BTC', 'ETH'],
+      backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe']
     },
     notCounted: [],
     assets: {
@@ -61,17 +62,28 @@ export const store = createStore({
       cryptos.forEach(crypto => {
         const { balance, usdPrice } = paylod[crypto];
 
+        const randomColor =
+          'rgba(' +
+          Math.floor(Math.random() * 256) +
+          ',' +
+          Math.floor(Math.random() * 256) +
+          ',' +
+          Math.floor(Math.random() * 256) +
+          ', 0.6)';
+
         if (usdPrice * 0 == 0) {
           sortedAssets.counted.push({
             label: crypto,
             balance,
             usdPrice,
-            usdValue: balance * usdPrice
+            usdValue: balance * usdPrice,
+            randomColor
           });
         } else {
           sortedAssets.notCounted.push({
             label: crypto,
-            balance
+            balance,
+            randomColor
           });
         }
       });
@@ -100,13 +112,15 @@ export const store = createStore({
     addWalletGraphData: action((state, paylod) => {
       const walletGraphData = {
         labels: [],
-        numbers: []
+        numbers: [],
+        backgroundColor: []
       };
 
       state.sortedAssets.counted.map(asset => {
         const { label, usdValue } = asset;
         walletGraphData.labels.push(label);
         walletGraphData.numbers.push(usdValue);
+        walletGraphData.backgroundColor.push(asset.randomColor);
       });
 
       state.walletGraphData = walletGraphData;
