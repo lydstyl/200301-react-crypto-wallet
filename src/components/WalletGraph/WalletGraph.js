@@ -29,13 +29,8 @@ export const WalletGraph = () => {
 
   return (
     <div className='wallet-graph'>
-      <div className='not-counted'>
-        <h2>Not counted</h2>
-      </div>
-      <div className='counted'>
-        <h2>Counted</h2>
-        <Doughnut data={walletGraphData} />
-      </div>
+      <h2>Portefeuille des cryptos dont le prix a été trouvé</h2>
+      <Doughnut data={walletGraphData} />
     </div>
   );
 };
