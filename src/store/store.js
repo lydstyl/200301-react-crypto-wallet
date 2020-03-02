@@ -13,9 +13,9 @@ export const store = createStore({
     },
     notCounted: [],
     assets: {
-      USD: { balance: 632 },
+      USD: { balance: 0 },
       BTC: { balance: 3.06225967 },
-      XRP: { balance: 10491.17282557 },
+      XRP: { balance: 13146 },
       BCH: { balance: 5.13250079 },
       LTC: { balance: 9.31198211 },
       XLM: { balance: 5390.23728831 },
