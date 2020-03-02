@@ -71,7 +71,7 @@ export const store = createStore({
           Math.floor(Math.random() * 256) +
           ', 0.6)';
 
-        if (usdPrice * 0 == 0) {
+        if (usdPrice * 0 === 0) {
           sortedAssets.counted.push({
             label: crypto,
             balance,
@@ -116,7 +116,7 @@ export const store = createStore({
         backgroundColor: []
       };
 
-      state.sortedAssets.counted.map(asset => {
+      state.sortedAssets.counted.forEach(asset => {
         const { label, usdValue } = asset;
         walletGraphData.labels.push(label);
         walletGraphData.numbers.push(usdValue);
