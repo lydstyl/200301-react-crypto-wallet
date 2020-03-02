@@ -3,30 +3,50 @@ import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export const Assets = () => {
-  const sortedAssets = useStoreState(state => state.wallet.sortedAssets);
-
   const assets = useStoreState(state => state.wallet.assets);
+  const sortedAssets = useStoreState(state => state.wallet.sortedAssets);
+  const currentTotal = useStoreState(state => state.wallet.currentTotal);
 
-  const removeAsset = useStoreActions(actions => actions.wallet.removeAsset);
+  const deleteAsset = useStoreActions(actions => actions.wallet.deleteAsset);
 
   const handleRemoveAsset = event => {
-    removeAsset(event.target.parentNode.querySelector('.symbol').innerText);
+    const payload = {
+      cryptoToRemove: event.target.parentNode.querySelector('.symbol')
+        .innerText,
+      assets
+    };
+    deleteAsset(payload); // this is a thunk
   };
 
-  const domAssets = Object.keys(assets).map(symbol => (
-    <li key={symbol}>
+  const notCounted = sortedAssets.notCounted.map(asset => (
+    <li>
       <span className='remove-asset' onClick={handleRemoveAsset}>
         X
       </span>{' '}
-      <span className='symbol'>{symbol}</span>
-      <span className='balance'>: {assets[symbol].balance}</span>
+      <span className='symbol'>{asset.label}</span>
+      <span className='balance'>: {asset.balance}</span>
+    </li>
+  ));
+
+  const counted = sortedAssets.counted.map(asset => (
+    <li>
+      <span className='remove-asset' onClick={handleRemoveAsset}>
+        X
+      </span>{' '}
+      <span className='symbol'>{asset.label}</span>
+      <span className='balance'>
+        : {asset.balance} * {asset.usdPrice} = {asset.usdValue}
+      </span>
     </li>
   ));
 
   return (
     <>
-      <pre>{JSON.stringify(sortedAssets, null, 4)}</pre>
-      <ul className='assets'>{domAssets}</ul>
+      <h2>Non comptés car prix USD non trouvé par l'API</h2>
+      <ul className='assets not-counted'>{notCounted}</ul>
+
+      <h2>Comptés car prix USD trouvé par l'API. Total = {currentTotal}$</h2>
+      <ul className='assets counted'>{counted}</ul>
     </>
   );
 };

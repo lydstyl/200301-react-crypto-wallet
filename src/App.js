@@ -13,7 +13,7 @@ function App() {
       <AddAsset />
       <Assets />
       <WalletGraph />
-      <HistoryGraph />
+      {/* <HistoryGraph /> */}
     </div>
   );
 }

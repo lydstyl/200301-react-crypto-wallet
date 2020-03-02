@@ -113,6 +113,11 @@ export const store = createStore({
     }),
 
     // thunks
+    deleteAsset: thunk(async (actions, payload) => {
+      delete payload.assets[payload.cryptoToRemove];
+
+      actions.updateAssetsWithPrices(payload.assets);
+    }),
     updateAssetsWithPrices: thunk(async (actions, payload) => {
       actions.setLoading(true);
 
