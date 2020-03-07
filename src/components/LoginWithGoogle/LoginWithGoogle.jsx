@@ -1,19 +1,13 @@
 import React from 'react';
 
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 
 import { auth } from '../../firebase/firebase';
 
 export const LoginWithGoogle = () => {
-  const { loading, isAuthenticated } = useStoreState(state => state.user);
-
-  const signInWithGoogle = useStoreActions(
-    actions => actions.user.signInWithGoogle
+  const { loading, isAuthenticated, userAndCredential } = useStoreState(
+    state => state.user
   );
-
-  const loginHandler = () => {
-    signInWithGoogle();
-  };
 
   const logoutHandler = () => {
     auth.signOut();
@@ -24,9 +18,12 @@ export const LoginWithGoogle = () => {
       {loading ? (
         <p>Loading...</p>
       ) : isAuthenticated ? (
-        <button onClick={logoutHandler}>Log out</button>
+        <>
+          <img src={userAndCredential.user.photoURL} alt='me' />
+          <button onClick={logoutHandler}>Log out</button>
+        </>
       ) : (
-        <button onClick={loginHandler}>Login with Google</button>
+        <p>Not loged</p>
       )}
     </div>
   );

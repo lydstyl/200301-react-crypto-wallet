@@ -1,23 +1,24 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export const LoginPage = () => {
-  const authenticate = useStoreActions(actions => actions.user.authenticate);
+  const { isAuthenticated } = useStoreState(state => state.user);
 
   const history = useHistory();
+  if (isAuthenticated) {
+    history.replace({ pathname: '/protected' });
+  }
 
-  let login = () => {
-    authenticate(() => {
-      history.replace({ pathname: '/login' });
-    });
-  };
+  const signInWithGoogle = useStoreActions(
+    actions => actions.user.signInWithGoogle
+  );
 
   return (
     <div>
       <p>You must log in to view the page</p>
 
-      {/* <button onClick={login}>Log in</button> */}
+      <button onClick={() => signInWithGoogle()}>Login with Google</button>
     </div>
   );
 };
