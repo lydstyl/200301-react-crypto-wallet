@@ -16,6 +16,7 @@ export const LoginPage = () => {
   return (
     <div>
       <p>You must log in to view the page</p>
+
       <button onClick={login}>Log in</button>
     </div>
   );
