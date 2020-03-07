@@ -21,7 +21,7 @@ export const Nav = () => {
         signOut(true);
       }
     });
-  }, []);
+  }, [setUserAndCredential, authenticate, signOut]);
 
   return (
     <nav>
