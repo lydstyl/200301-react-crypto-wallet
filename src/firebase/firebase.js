@@ -1,4 +1,8 @@
-import app from 'firebase/app';
+// import app from 'firebase/app';
+// import 'firebase/auth';
+
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
@@ -10,12 +14,14 @@ const config = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
 };
 
-class Firebase {
-  constructor() {
-    app.initializeApp(config);
+firebase.initializeApp(config);
 
-    this.auth = app.auth();
-  }
-}
+export const auth = firebase.auth();
 
-export default Firebase;
+export const firestore = firebase.firestore();
+
+const provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
+// export default firebase;

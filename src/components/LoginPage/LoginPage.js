@@ -17,7 +17,7 @@ export const LoginPage = () => {
     <div>
       <p>You must log in to view the page</p>
 
-      <button onClick={login}>Log in</button>
+      {/* <button onClick={login}>Log in</button> */}
     </div>
   );
 };

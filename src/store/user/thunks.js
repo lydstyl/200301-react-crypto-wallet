@@ -1,17 +1,34 @@
 import { thunk } from 'easy-peasy';
 
-import Firebase from '../../firebase/firebase';
-
-console.log('f');
-
-const f = new Firebase();
-
-//f.auth.createUserWithEmailAndPassword('lydstyl@gmail.com', '123456');
+import { signInWithGoogle } from '../../firebase/firebase';
 
 export const thunks = {
-  createUserWithEmailAndPassword: thunk(async (actions, payload) => {
-    f.auth.createUserWithEmailAndPassword('lydstyl@gmail.com', '123456');
+  // createUserWithEmailAndPassword: thunk(async (actions, payload) => {
+  //   actions.setLoading(true);
 
-    //actions.updateAssetsWithPrices(payload.assets);
+  //   actions.setLoading(false);
+  // }),
+
+  signInWithGoogle: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+
+    const result = await signInWithGoogle();
+
+    actions.setUserAndCredential(result);
+
+    actions.authenticate();
+
+    actions.setLoading(false);
+  }),
+
+  signOut: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+
+    // const result = await signOut();
+    actions.setUserAndCredential(null);
+
+    actions.signout();
+
+    actions.setLoading(false);
   })
 };
