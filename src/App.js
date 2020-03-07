@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
   useHistory
 } from 'react-router-dom';
 
@@ -15,6 +14,9 @@ import { AddAsset } from './components/AddAsset/AddAsset';
 import { Assets } from './components/Assets/Assets';
 import { WalletGraph } from './components/WalletGraph/WalletGraph';
 // import { HistoryGraph } from './components/HistoryGraph/HistoryGraph';
+
+import { LoginPage } from './components/LoginPage/LoginPage';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 
 import './App.css';
 
@@ -74,45 +76,6 @@ function AuthButton() {
     </p>
   ) : (
     <p>You are not logged in.</p>
-  );
-}
-
-// A wrapper for <Route> that redirects to the login
-// screen if you're not yet authenticated.
-function PrivateRoute({ children, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        fakeAuth.isAuthenticated ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: location }
-            }}
-          />
-        )
-      }
-    />
-  );
-}
-
-function LoginPage() {
-  const history = useHistory();
-
-  let login = () => {
-    fakeAuth.authenticate(() => {
-      history.replace({ pathname: '/login' });
-    });
-  };
-
-  return (
-    <div>
-      <p>You must log in to view the page</p>
-      <button onClick={login}>Log in</button>
-    </div>
   );
 }
 
