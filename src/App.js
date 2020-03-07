@@ -7,7 +7,6 @@ import { Nav } from './components/Nav/Nav';
 import { PublicPage } from './components/PublicPage/PublicPage';
 import { LoginPage } from './components/LoginPage/LoginPage';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
-import { ProtectedPage } from './components/ProtectedPage/ProtectedPage';
 import { AddAsset } from './components/AddAsset/AddAsset';
 import { Assets } from './components/Assets/Assets';
 import { WalletGraph } from './components/WalletGraph/WalletGraph';
@@ -31,8 +30,6 @@ function App() {
           </Route>
 
           <PrivateRoute path='/protected'>
-            <ProtectedPage />
-
             <AddAsset />
 
             <Assets />

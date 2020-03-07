@@ -17,13 +17,13 @@ export const LoginWithGoogle = () => {
     <div>
       {loading ? (
         <p>Loading...</p>
-      ) : isAuthenticated ? (
-        <>
-          <img src={userAndCredential.user.photoURL} alt='me' />
-          <button onClick={logoutHandler}>Log out</button>
-        </>
       ) : (
-        <p>Not loged</p>
+        isAuthenticated && (
+          <>
+            <img src={userAndCredential.user.photoURL} alt='me' />
+            <button onClick={logoutHandler}>Log out</button>
+          </>
+        )
       )}
     </div>
   );
