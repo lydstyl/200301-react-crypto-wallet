@@ -13,7 +13,7 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.replace({ pathname: '/protected' });
+      history.replace({ pathname: '/' });
     }
   }, [history, isAuthenticated]);
 

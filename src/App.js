@@ -21,7 +21,7 @@ function App() {
         <Nav />
 
         <Switch>
-          <Route path='/public'>
+          <Route path='/présentation-crypto-wallet'>
             <PublicPage />
           </Route>
 
@@ -29,7 +29,7 @@ function App() {
             <LoginPage />
           </Route>
 
-          <PrivateRoute path='/protected'>
+          <PrivateRoute path='/'>
             <AddAsset />
 
             <Assets />

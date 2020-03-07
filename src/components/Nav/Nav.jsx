@@ -27,10 +27,12 @@ export const Nav = () => {
     <nav>
       <ul>
         <li>
-          <Link to='/public'>Public Page</Link>
+          <Link to='/présentation-crypto-wallet'>
+            Présentation de l'application Crypto Walllet
+          </Link>
         </li>
         <li>
-          <Link to='/protected'>Protected Page</Link>
+          <Link to='/'>My crypto wallet</Link>
         </li>
       </ul>
 
