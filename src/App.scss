@@ -1,0 +1,42 @@
+// VARIABLES
+$cp: #9c27b0; // p for primary, s for secondary
+$cpl: #d05ce3;
+$cpd: #6a0080;
+$conp: #fff;
+$conpl: #000;
+
+// Google Fonts
+@import url(https://fonts.googleapis.com/css?family=Oxanium|Roboto&display=swap);
+
+// Font Variables
+$header-font: 'Oxanium', serif;
+$normal-font: 'Roboto', sans-serif;
+
+// RESET
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: $normal-font;
+}
+
+h1,
+h2,
+h3 {
+  font-family: $header-font;
+  font-weight: normal;
+}
+
+//
+
+li span.remove-asset {
+  display: none;
+  color: $conp;
+}
+
+li:hover span.remove-asset {
+  display: inline;
+}

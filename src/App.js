@@ -12,7 +12,7 @@ import { Assets } from './components/Assets/Assets';
 import { WalletGraph } from './components/WalletGraph/WalletGraph';
 import { HistoryGraph } from './components/HistoryGraph/HistoryGraph';
 
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
