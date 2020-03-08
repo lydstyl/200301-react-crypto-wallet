@@ -3,9 +3,10 @@ import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export const Assets = () => {
-  const assets = useStoreState(state => state.wallet.assets);
-  const sortedAssets = useStoreState(state => state.wallet.sortedAssets);
-  const currentTotal = useStoreState(state => state.wallet.currentTotal);
+  const { uid } = useStoreState(state => state.user);
+  const { assets, sortedAssets, currentTotal } = useStoreState(
+    state => state.wallet
+  );
 
   const deleteAsset = useStoreActions(actions => actions.wallet.deleteAsset);
 
@@ -13,8 +14,12 @@ export const Assets = () => {
     const payload = {
       cryptoToRemove: event.target.parentNode.querySelector('.symbol')
         .innerText,
-      assets
+      assets,
+      uid
     };
+
+    console.log('payload', payload);
+
     deleteAsset(payload); // this is a thunk
   };
 

@@ -48,9 +48,34 @@ export const thunks = {
   }),
 
   deleteAsset: thunk(async (actions, payload) => {
-    delete payload.assets[payload.cryptoToRemove];
+    firestore
+      .collection(`users/${payload.uid}/assets`)
+      .where('symbol', '==', payload.cryptoToRemove)
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, ' => ', doc.data());
 
-    actions.updateAssetsWithPrices(payload.assets);
+          firestore
+            .collection(`users/${payload.uid}/assets`)
+            .doc(doc.id)
+            .delete()
+            .then(function() {
+              console.log('Document successfully deleted!');
+            })
+            .catch(function(error) {
+              console.error('Error removing document: ', error);
+            });
+        });
+      })
+      .catch(function(error) {
+        console.log('Error getting documents: ', error);
+      });
+
+    // delete payload.assets[payload.cryptoToRemove];
+
+    // actions.updateAssetsWithPrices(payload.assets);
   }),
 
   saveAssetsToFirebase: thunk(async (actions, payload) => {
