@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useStoreActions } from 'easy-peasy';
 
-import { auth } from '../../firebase/firebase';
+import { auth, createUserProfileDocument } from '../../firebase/firebase';
 import { LoginWithGoogle } from '../LoginWithGoogle/LoginWithGoogle';
 
 export const Nav = () => {
@@ -11,16 +11,21 @@ export const Nav = () => {
   );
 
   useEffect(() => {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        // User is signed in.
-        setUserAndCredential({ user });
+    auth.onAuthStateChanged(
+      async user => {
+        if (user) {
+          // User is signed in.
+          await createUserProfileDocument(user);
 
-        authenticate();
-      } else {
-        signOut(true);
-      }
-    });
+          setUserAndCredential({ user });
+
+          authenticate();
+        } else {
+          signOut(true);
+        }
+      },
+      error => console.log(error)
+    );
   }, [setUserAndCredential, authenticate, signOut]);
 
   return (
