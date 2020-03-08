@@ -20,19 +20,19 @@ export const actions = {
     state.assets = payload;
   }),
 
-  setLoading: action((state, paylod) => {
-    state.loading = paylod;
+  setLoading: action((state, payload) => {
+    state.loading = payload;
   }),
 
-  setSortedAssets: action((state, paylod) => {
-    const cryptos = Object.keys(paylod);
+  setSortedAssets: action((state, payload) => {
+    const cryptos = Object.keys(payload);
     const sortedAssets = {
       notCounted: [],
       counted: []
     };
 
     cryptos.forEach(crypto => {
-      const { balance, usdPrice } = paylod[crypto];
+      const { balance, usdPrice } = payload[crypto];
 
       const randomColor =
         'rgba(' +
@@ -100,15 +100,17 @@ export const actions = {
     state.walletGraphData = walletGraphData;
   }),
 
-  addToHistory: action((state, paylod) => {
-    // state.currentTotal = total;
-    console.log('todo addToHistory in store');
+  addToHistory: action((state, { savedAtFr, walletTotal }) => {
+    state.history.push({
+      date: savedAtFr,
+      usdValue: walletTotal
+    });
   }),
 
-  setHistoryToStore: action((state, paylod) => {
-    const history = paylod.map(event => ({
-      // date: event.savedAtFr,
-      date: event.savedAtEn,
+  setHistoryToStore: action((state, payload) => {
+    const history = payload.map(event => ({
+      date: event.savedAtFr,
+      // date: event.savedAtEn,
       usdValue: event.walletTotal
     }));
 
