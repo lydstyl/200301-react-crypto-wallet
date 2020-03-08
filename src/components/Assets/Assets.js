@@ -22,10 +22,7 @@ export const Assets = () => {
   };
 
   const notCounted = sortedAssets.notCounted.map(asset => (
-    <li
-      key={asset.label}
-      // style={{ borderBottom: `6px solid ${asset.randomColor}` }}
-    >
+    <li key={asset.label}>
       <span className='remove-asset' onClick={handleRemoveAsset}>
         X
       </span>{' '}
@@ -44,8 +41,9 @@ export const Assets = () => {
       </span>{' '}
       <span className='symbol'>{asset.label}</span>
       <span className='value'>
-        : <span className='balance'>{asset.balance}</span> * {asset.usdPrice} ={' '}
-        {asset.usdValue}
+        : <span className='balance'>{asset.balance}</span> *{' '}
+        {asset.usdPrice.toString().substring(0, 7)} ={' '}
+        {Math.round(asset.usdValue).toLocaleString('fr')}
       </span>
     </li>
   ));

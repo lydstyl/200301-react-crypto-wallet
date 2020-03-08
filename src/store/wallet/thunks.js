@@ -118,16 +118,5 @@ export const thunks = {
     //actions.addPercent();
 
     actions.setLoading(false);
-  }),
-
-  set1BTC: thunk(async (actions, payload) => {
-    console.log('thunk set1BTC', payload);
-
-    //state.assets[payload.symbol.toUpperCase()] = { balance: payload.balance };
-    actions.addAsset({ symbol: 'btc', balance: 1 });
-
-    // delete payload.assets[payload.cryptoToRemove];
-
-    // actions.updateAssetsWithPrices(payload.assets);
   })
 };

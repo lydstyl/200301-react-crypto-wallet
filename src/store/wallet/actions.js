@@ -20,10 +20,6 @@ export const actions = {
     state.assets = payload;
   }),
 
-  setCurrentTotal: action((state, paylod) => {
-    state.currentTotal = paylod;
-  }),
-
   setLoading: action((state, paylod) => {
     state.loading = paylod;
   }),
@@ -84,7 +80,7 @@ export const actions = {
       total += asset.usdValue;
     });
 
-    state.currentTotal = total;
+    state.currentTotal = Math.round(total).toLocaleString('fr');
   }),
 
   addWalletGraphData: action((state, paylod) => {
