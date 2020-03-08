@@ -3,25 +3,24 @@ import { firestore } from '../../firebase/firebase';
 
 export const thunks = {
   setInitialWallet: thunk(async (actions, payload) => {
-    // const initialAssets = {
-    //   USD: { balance: 0 },
-    //   BTC: { balance: 1 }
-    // };
     const initialAssets = {};
 
-    const assets = firestore.collection(`users/${payload}/assets`);
+    firestore
+      .collection(`users/${payload}/assets`)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.docs.forEach(queryDocumentSnapshot => {
+          const T = queryDocumentSnapshot.data();
 
-    assets.get().then(querySnapshot => {
-      querySnapshot.docs.forEach(queryDocumentSnapshot => {
-        const T = queryDocumentSnapshot.data();
+          initialAssets[T.symbol] = { balance: T.balance };
+        });
 
-        initialAssets[T.symbol] = { balance: T.balance };
+        actions.getHistoryFromDB(payload);
+
+        actions.setInitialAssets(initialAssets);
+
+        actions.updateAssetsWithPrices(initialAssets);
       });
-
-      actions.setInitialAssets(initialAssets);
-
-      actions.updateAssetsWithPrices(initialAssets);
-    });
   }),
 
   addOneAsset: thunk(async (actions, payload) => {
@@ -111,10 +110,6 @@ export const thunks = {
 
     actions.addWalletGraphData();
 
-    // actions.addCountedAndNot
-
-    //actions.addPercent();
-
     actions.setLoading(false);
   }),
 
@@ -129,6 +124,24 @@ export const thunks = {
       })
       .catch(function(error) {
         console.error('Error adding document: ', error);
+      });
+  }),
+
+  getHistoryFromDB: thunk(async (actions, payload) => {
+    const history = [];
+
+    firestore
+      .collection(`users/${payload}/history`)
+      .orderBy('savedAtEn') // sort with the date can put 'desc' in second parameter if needed
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.docs.forEach(queryDocumentSnapshot => {
+          const T = queryDocumentSnapshot.data();
+
+          history.push(T);
+        });
+
+        actions.setHistoryToStore(history);
       });
   })
 };

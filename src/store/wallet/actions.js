@@ -103,5 +103,15 @@ export const actions = {
   addToHistory: action((state, paylod) => {
     // state.currentTotal = total;
     console.log('todo addToHistory in store');
+  }),
+
+  setHistoryToStore: action((state, paylod) => {
+    const history = paylod.map(event => ({
+      // date: event.savedAtFr,
+      date: event.savedAtEn,
+      usdValue: event.walletTotal
+    }));
+
+    state.history = history;
   })
 };
