@@ -7,6 +7,7 @@ export const AddAsset = () => {
   const [symbol, setSymbol] = useState('');
   const [balance, setBalance] = useState('');
 
+  const { uid, email } = useStoreState(state => state.user);
   const assets = useStoreState(state => state.wallet.assets);
 
   const addOneAsset = useStoreActions(actions => actions.wallet.addOneAsset);
@@ -25,7 +26,13 @@ export const AddAsset = () => {
     setBalance(event.target.value);
   };
 
-  const handleAddAsset = payload => {
+  const handleAddAsset = () => {
+    const payload = {
+      toAdd: { symbol: symbol.toUpperCase(), balance },
+      assets,
+      user: { uid, email }
+    };
+
     addOneAsset(payload);
 
     // reset form
@@ -58,14 +65,7 @@ export const AddAsset = () => {
         placeholder='balance'
       />
 
-      {showButton && (
-        // <button onClick={() => addAsset({ symbol, balance })}>Add</button>
-        <button
-          onClick={() => handleAddAsset({ toAdd: { symbol, balance }, assets })}
-        >
-          Add
-        </button>
-      )}
+      {showButton && <button onClick={() => handleAddAsset()}>Add</button>}
     </div>
   );
 };

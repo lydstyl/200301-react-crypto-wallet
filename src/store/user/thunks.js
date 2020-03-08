@@ -21,6 +21,10 @@ export const thunks = {
     actions.setLoading(false);
   }),
 
+  // saveUserInDBIfNotYetSaved: thunk(async (actions, payload) => {
+  //   console.log('saveUserInDBIfNotYetSaved', payload);
+  // }),
+
   signOut: thunk(async (actions, payload) => {
     actions.setLoading(true);
 

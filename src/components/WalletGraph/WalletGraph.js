@@ -25,7 +25,7 @@ export const WalletGraph = () => {
   );
 
   useEffect(() => {
-    updateAssetsWithPrices(assets); // this is a thunk
+    //updateAssetsWithPrices(assets); // this is a thunk
     // eslint-disable-next-line
   }, []);
 

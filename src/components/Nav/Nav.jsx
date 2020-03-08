@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { auth, createUserProfileDocument } from '../../firebase/firebase';
 import { LoginWithGoogle } from '../LoginWithGoogle/LoginWithGoogle';
 
 export const Nav = () => {
+  const { falseInitialAssets } = useStoreState(state => state.wallet);
+
   const { setUserAndCredential, authenticate, signOut } = useStoreActions(
     actions => actions.user
   );
+  const { setInitialWallet } = useStoreActions(actions => actions.wallet);
 
   useEffect(() => {
     auth.onAuthStateChanged(
@@ -20,6 +23,11 @@ export const Nav = () => {
           setUserAndCredential({ user });
 
           authenticate();
+
+          if (falseInitialAssets) {
+            // thunk to fetch assets in db
+            setInitialWallet(user.uid);
+          }
         } else {
           signOut(true);
         }

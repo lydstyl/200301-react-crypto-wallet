@@ -1,21 +1,33 @@
 import { action } from 'easy-peasy';
 
 export const actions = {
+  setInitialAssets: action((state, payload) => {
+    state.assets = payload;
+    if (Object.keys(payload).length) {
+      state.falseInitialAssets = false;
+    }
+  }),
+
   addAsset: action((state, payload) => {
     state.assets[payload.symbol.toUpperCase()] = { balance: payload.balance };
   }),
+
   removeAsset: action((state, payload) => {
     delete state.assets[payload];
   }),
+
   setAssets: action((state, payload) => {
     state.assets = payload;
   }),
+
   setCurrentTotal: action((state, paylod) => {
     state.currentTotal = paylod;
   }),
+
   setLoading: action((state, paylod) => {
     state.loading = paylod;
   }),
+
   setSortedAssets: action((state, paylod) => {
     const cryptos = Object.keys(paylod);
     const sortedAssets = {
@@ -64,6 +76,7 @@ export const actions = {
 
     state.sortedAssets = sortedAssets;
   }),
+
   addTotal: action((state, paylod) => {
     let total = 0;
 
@@ -73,6 +86,7 @@ export const actions = {
 
     state.currentTotal = total;
   }),
+
   addWalletGraphData: action((state, paylod) => {
     const walletGraphData = {
       labels: [],

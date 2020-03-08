@@ -2,10 +2,26 @@ import { thunk } from 'easy-peasy';
 import { firestore } from '../../firebase/firebase';
 
 export const thunks = {
-  deleteAsset: thunk(async (actions, payload) => {
-    delete payload.assets[payload.cryptoToRemove];
+  setInitialWallet: thunk(async (actions, payload) => {
+    // const initialAssets = {
+    //   USD: { balance: 0 },
+    //   BTC: { balance: 1 }
+    // };
+    const initialAssets = {};
 
-    actions.updateAssetsWithPrices(payload.assets);
+    const assets = firestore.collection(`users/${payload}/assets`);
+
+    assets.get().then(querySnapshot => {
+      querySnapshot.docs.forEach(queryDocumentSnapshot => {
+        const T = queryDocumentSnapshot.data();
+
+        initialAssets[T.symbol] = { balance: T.balance };
+      });
+
+      actions.setInitialAssets(initialAssets);
+
+      actions.updateAssetsWithPrices(initialAssets);
+    });
   }),
 
   addOneAsset: thunk(async (actions, payload) => {
@@ -29,6 +45,12 @@ export const thunks = {
     // };
 
     // actions.updateAssetsWithPrices(payload.assets);
+  }),
+
+  deleteAsset: thunk(async (actions, payload) => {
+    delete payload.assets[payload.cryptoToRemove];
+
+    actions.updateAssetsWithPrices(payload.assets);
   }),
 
   saveAssetsToFirebase: thunk(async (actions, payload) => {
