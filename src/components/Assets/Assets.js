@@ -50,13 +50,13 @@ export const Assets = () => {
 
   return (
     <>
-      <h3>Prix non trouvés</h3>
-      <ul className='assets not-counted'>{notCounted}</ul>
-
       <h3>
         Prix trouvés. Total = {Math.round(currentTotal).toLocaleString('fr')}$
       </h3>
       <ul className='assets counted'>{counted}</ul>
+
+      <h3>Prix non trouvés</h3>
+      <ul className='assets not-counted'>{notCounted}</ul>
     </>
   );
 };

@@ -21,7 +21,7 @@ export const LoginWithGoogle = () => {
         isAuthenticated && (
           <>
             <img src={userAndCredential.user.photoURL} alt='me' />
-            <button onClick={logoutHandler}>Log out</button>
+            <button onClick={logoutHandler}>Déconnexion</button>
           </>
         )
       )}

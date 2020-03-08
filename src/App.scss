@@ -46,12 +46,18 @@ h2 {
   font-size: 2rem;
   color: $cop;
   background-color: $cpd;
+  padding: 0 50px;
 }
 
 h3 {
   font-size: 1.5rem;
   margin: $s3 0;
   color: $cpd;
+}
+
+h3,
+ul {
+  padding: 0 50px;
 }
 
 button {
@@ -104,6 +110,10 @@ li {
       button {
         font-size: 1.5rem;
       }
+
+      p {
+        font-size: 2rem;
+      }
     }
   }
 }
@@ -116,15 +126,20 @@ li {
   .assets-and-graph,
   .history-and-graph {
     margin: $s1 0 $s2;
-    border: 1px solid;
   }
 
   .assets-and-graph {
     margin-top: 0;
 
     .cpl {
+      min-height: 100px;
       margin-top: $s2;
+      padding: 50px;
       background-color: $cpl;
+
+      button {
+        font-size: 2rem;
+      }
     }
 
     .add-asset {
@@ -168,6 +183,19 @@ li {
     }
   }
   .history-and-graph {
+    h2 {
+      margin: $s2 0 $s3;
+    }
+    button {
+      margin-bottom: $s3;
+      color: $copl;
+      font-size: 2rem;
+    }
+
+    canvas {
+      margin-bottom: $s3;
+    }
+
     ul {
       li {
         min-height: 40px;

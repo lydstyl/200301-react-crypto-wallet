@@ -21,9 +21,11 @@ export const LoginPage = () => {
     <div className='cpl'>
       {!loading && (
         <>
-          <p>You must log in to view the page</p>
+          <p>Vous devez vous loger pour voir cette page.</p>
 
-          <button onClick={() => signInWithGoogle()}>Login with Google</button>
+          <button onClick={() => signInWithGoogle()}>
+            Se loguer via Google
+          </button>
         </>
       )}
     </div>
