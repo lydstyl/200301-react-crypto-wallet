@@ -13,8 +13,8 @@ export const initialWallet = {
 
   sortedAssets: { counted: [], notCounted: [] },
   history: [
-    { date: 'date1', usdValue: 5 },
-    { date: 'date2', usdValue: 8 },
-    { date: 'date3', usdValue: 20 }
+    { key: 1, date: 'date1', usdValue: 5 },
+    { key: 2, date: 'date2', usdValue: 8 },
+    { key: 3, date: 'date3', usdValue: 20 }
   ]
 };

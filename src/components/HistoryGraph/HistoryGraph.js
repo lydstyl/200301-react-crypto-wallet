@@ -44,11 +44,27 @@ export const HistoryGraph = () => {
     saveToHistoryDB(payload);
   };
 
+  const handleRemoveFromHistory = () => {
+    console.log('handleRemoveFromHistory');
+  };
+
   return (
     <div className='history'>
       <button onClick={handleSaveToHistory}>Save this wallet in history</button>
 
-      <p>{JSON.stringify(history, null, 4)}</p>
+      <ul>
+        {history &&
+          history.map(event => (
+            <li key={event.key}>
+              <span>{typeof event.key}</span>
+              <span onClick={handleRemoveFromHistory}>X</span>
+              <span> </span>
+              <span>{event.date}</span>
+              <span> </span>
+              <span>{event.usdValue}</span>
+            </li>
+          ))}
+      </ul>
 
       <Line data={data} />
     </div>
