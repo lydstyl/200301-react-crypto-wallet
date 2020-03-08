@@ -9,7 +9,7 @@ export const thunks = {
   }),
 
   addOneAsset: thunk(async (actions, payload) => {
-    // add assets in the user in the db
+    // add asset in the user in the db
     firestore
       .collection(`users/${payload.user.uid}/assets`)
       .add({
