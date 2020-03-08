@@ -34,7 +34,13 @@ export const Nav = () => {
       },
       error => console.log(error)
     );
-  }, [setUserAndCredential, authenticate, signOut]);
+  }, [
+    setUserAndCredential,
+    authenticate,
+    setInitialWallet,
+    falseInitialAssets,
+    signOut
+  ]);
 
   return (
     <nav>

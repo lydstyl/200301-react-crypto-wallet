@@ -18,8 +18,6 @@ export const Assets = () => {
       uid
     };
 
-    console.log('payload', payload);
-
     deleteAsset(payload); // this is a thunk
   };
 

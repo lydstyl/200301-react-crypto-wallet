@@ -109,9 +109,6 @@ export const thunks = {
 
     actions.setSortedAssets(newAssets);
 
-    // à quelle moment sauver les assets dans firebase ?
-    console.log('newAssets', newAssets);
-
     actions.addTotal();
 
     actions.addWalletGraphData();
