@@ -37,9 +37,11 @@ function App() {
               <div className='assets-and-graph'>
                 <AddAsset />
 
-                <Assets />
+                <div className='flexer'>
+                  <Assets />
 
-                <WalletGraph />
+                  <WalletGraph />
+                </div>
               </div>
 
               <div className='history-and-graph'>

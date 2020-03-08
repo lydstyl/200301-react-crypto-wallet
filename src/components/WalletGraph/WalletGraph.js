@@ -17,7 +17,7 @@ export const WalletGraph = () => {
   };
 
   return (
-    <div className='wallet-graph'>
+    <div className='wallet-graph box'>
       <h2>Graphique des cryptos dont le prix a été trouvé</h2>
 
       <Doughnut data={walletGraphData} />

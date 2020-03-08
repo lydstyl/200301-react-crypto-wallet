@@ -51,7 +51,7 @@ h2 {
 
 h3 {
   font-size: 1.5rem;
-  margin: $s3 0;
+  margin: $s3 0 $s4;
   color: $cpd;
 }
 
@@ -81,16 +81,22 @@ li {
 
 // CSS
 .header {
+  padding: $s4;
+  background-color: $cp;
+  color: $cop;
+
   a {
     color: $cop;
   }
 
-  padding: $s4;
   h1 {
     font-size: 5rem;
   }
-  background-color: $cp;
-  color: $cop;
+
+  ul {
+    padding-left: 0;
+    margin-bottom: $s4;
+  }
 
   .container {
     display: flex;
@@ -116,11 +122,29 @@ li {
       }
     }
   }
+
+  @media screen and (min-width: 1024px) {
+    .container {
+      flex-direction: row;
+      min-height: 0;
+
+      ul {
+        margin-bottom: 0;
+        li {
+          margin: 10px 0;
+        }
+      }
+
+      img {
+        margin: 0 $s4;
+      }
+    }
+  }
 }
 
 .wrapper {
   width: 100%;
-  max-width: 1000px;
+  //max-width: 1000px;
   margin: 0 0;
 
   .assets-and-graph,
@@ -164,6 +188,12 @@ li {
         button {
           margin: 40px;
           font-size: 2rem;
+        }
+      }
+
+      @media screen and (min-width: 1024px) {
+        form {
+          flex-direction: row;
         }
       }
     }
@@ -212,4 +242,66 @@ li span.remove-asset {
 
 li:hover span.remove-asset {
   display: inline;
+}
+
+@media screen and (min-width: 768px) {
+  .history ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    // padding: 0;
+    li {
+      margin-bottom: 0 !important;
+      text-align: center;
+    }
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  .header {
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: auto;
+    }
+  }
+
+  .wrapper {
+    max-width: 1300px;
+    margin: auto;
+  }
+  canvas {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .flexer {
+    display: flex;
+    justify-content: space-between;
+
+    h3,
+    ul {
+      padding-left: 0;
+    }
+
+    .box {
+      margin-top: $s2;
+      h2,
+      h3 {
+        margin-top: 0;
+      }
+    }
+    .box:first-child {
+      width: 30%;
+    }
+  }
+
+  .add-asset,
+  h2 {
+    border-radius: 5px;
+  }
 }

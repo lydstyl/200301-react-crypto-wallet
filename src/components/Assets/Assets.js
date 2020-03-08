@@ -49,7 +49,7 @@ export const Assets = () => {
   ));
 
   return (
-    <>
+    <div className='box'>
       <h3>
         Prix trouvés. Total = {Math.round(currentTotal).toLocaleString('fr')}$
       </h3>
@@ -57,6 +57,6 @@ export const Assets = () => {
 
       <h3>Prix non trouvés</h3>
       <ul className='assets not-counted'>{notCounted}</ul>
-    </>
+    </div>
   );
 };
