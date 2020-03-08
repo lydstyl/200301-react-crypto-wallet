@@ -73,17 +73,17 @@ export const actions = {
     state.sortedAssets = sortedAssets;
   }),
 
-  addTotal: action((state, paylod) => {
+  addTotal: action(state => {
     let total = 0;
 
     state.sortedAssets.counted.forEach(asset => {
       total += asset.usdValue;
     });
 
-    state.currentTotal = Math.round(total).toLocaleString('fr');
+    state.currentTotal = total;
   }),
 
-  addWalletGraphData: action((state, paylod) => {
+  addWalletGraphData: action(state => {
     const walletGraphData = {
       labels: [],
       numbers: [],
@@ -98,5 +98,10 @@ export const actions = {
     });
 
     state.walletGraphData = walletGraphData;
+  }),
+
+  addToHistory: action((state, paylod) => {
+    // state.currentTotal = total;
+    console.log('todo addToHistory in store');
   })
 };

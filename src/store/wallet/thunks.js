@@ -116,5 +116,19 @@ export const thunks = {
     //actions.addPercent();
 
     actions.setLoading(false);
+  }),
+
+  saveToHistoryDB: thunk(async (actions, payload) => {
+    firestore
+      .collection(`users/${payload.uid}/history`)
+      .add(payload)
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+
+        actions.addToHistory();
+      })
+      .catch(function(error) {
+        console.error('Error adding document: ', error);
+      });
   })
 };

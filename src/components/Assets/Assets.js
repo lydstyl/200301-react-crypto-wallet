@@ -53,7 +53,10 @@ export const Assets = () => {
       <h2>Non comptés car prix USD non trouvé par l'API</h2>
       <ul className='assets not-counted'>{notCounted}</ul>
 
-      <h2>Comptés car prix USD trouvé par l'API. Total = {currentTotal}$</h2>
+      <h2>
+        Comptés car prix USD trouvé par l'API. Total ={' '}
+        {Math.round(currentTotal).toLocaleString('fr')}$
+      </h2>
       <ul className='assets counted'>{counted}</ul>
     </>
   );

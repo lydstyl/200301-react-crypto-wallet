@@ -3,8 +3,9 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Line } from 'react-chartjs-2';
 
 export const HistoryGraph = () => {
-  const currentTotal = useStoreState(state => state.wallet.currentTotal);
-  const history = useStoreState(state => state.wallet.history);
+  const { uid } = useStoreState(state => state.user);
+  const { currentTotal, history } = useStoreState(state => state.wallet);
+  const { saveToHistoryDB } = useStoreActions(state => state.wallet);
 
   const data = {
     datasets: [
@@ -30,10 +31,24 @@ export const HistoryGraph = () => {
     labels: history.map(instant => instant.date)
   };
 
+  const handleSaveToHistory = () => {
+    const now = new Date();
+
+    const payload = {
+      uid,
+      savedAtEn: Date.parse(now),
+      savedAtFr: now.toLocaleDateString('fr-FR'),
+      walletTotal: parseInt(currentTotal)
+    };
+
+    saveToHistoryDB(payload);
+  };
+
   return (
     <div className='history'>
-      <p>Current total: {currentTotal}$</p>
-      <button>Save this wallet in history</button>
+      <button onClick={handleSaveToHistory}>Save this wallet in history</button>
+
+      <p>{JSON.stringify(history, null, 4)}</p>
 
       <Line data={data} />
     </div>
