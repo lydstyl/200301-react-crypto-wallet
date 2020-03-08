@@ -69,6 +69,7 @@ export const AddAsset = () => {
 
   return (
     <div className='add-asset'>
+      <h2>Mon portefeuille</h2>
       <input
         className='symbol'
         onChange={handleSymbolChange}

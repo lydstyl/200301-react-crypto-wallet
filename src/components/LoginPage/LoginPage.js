@@ -18,7 +18,7 @@ export const LoginPage = () => {
   }, [history, isAuthenticated]);
 
   return (
-    <div>
+    <div className='cpl'>
       {!loading && (
         <>
           <p>You must log in to view the page</p>

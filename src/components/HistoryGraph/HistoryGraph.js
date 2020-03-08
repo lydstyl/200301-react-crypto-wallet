@@ -57,6 +57,7 @@ export const HistoryGraph = () => {
 
   return (
     <div className='history'>
+      <h2>History</h2>
       <button onClick={handleSaveToHistory}>Save this wallet in history</button>
 
       <ul>

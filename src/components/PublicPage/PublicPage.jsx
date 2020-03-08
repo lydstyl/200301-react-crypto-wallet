@@ -1,5 +1,5 @@
 import React from 'react';
 
 export const PublicPage = () => {
-  return <h3>Public</h3>;
+  return <h2>Présentation de l'application</h2>;
 };

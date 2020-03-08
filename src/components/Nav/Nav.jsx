@@ -43,15 +43,14 @@ export const Nav = () => {
   ]);
 
   return (
-    <nav>
+    <nav className='header'>
+      <h1>Crypto Wallet</h1>
       <ul>
         <li>
-          <Link to='/présentation-crypto-wallet'>
-            Présentation de l'application Crypto Walllet
-          </Link>
+          <Link to='/présentation-crypto-wallet'>Présentation</Link>
         </li>
         <li>
-          <Link to='/'>My crypto wallet</Link>
+          <Link to='/'>Mon portefeuille</Link>
         </li>
       </ul>
 

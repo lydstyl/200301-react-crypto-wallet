@@ -19,26 +19,33 @@ function App() {
     <div className='App'>
       <Router>
         <Nav />
+        <div className='wrapper'>
+          <Switch>
+            <div className='assets-and-graph'>
+              <Route path='/présentation-crypto-wallet'>
+                <PublicPage />
+              </Route>
 
-        <Switch>
-          <Route path='/présentation-crypto-wallet'>
-            <PublicPage />
-          </Route>
+              <Route path='/login'>
+                <LoginPage />
+              </Route>
+            </div>
 
-          <Route path='/login'>
-            <LoginPage />
-          </Route>
+            <PrivateRoute path='/'>
+              <div className='assets-and-graph'>
+                <AddAsset />
 
-          <PrivateRoute path='/'>
-            <AddAsset />
+                <Assets />
 
-            <Assets />
+                <WalletGraph />
+              </div>
 
-            <WalletGraph />
-
-            <HistoryGraph />
-          </PrivateRoute>
-        </Switch>
+              <div className='history-and-graph'>
+                <HistoryGraph />
+              </div>
+            </PrivateRoute>
+          </Switch>
+        </div>
       </Router>
     </div>
   );

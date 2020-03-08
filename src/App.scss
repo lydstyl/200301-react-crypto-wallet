@@ -2,15 +2,20 @@
 $cp: #9c27b0; // p for primary, s for secondary
 $cpl: #d05ce3;
 $cpd: #6a0080;
-$conp: #fff;
-$conpl: #000;
+$cop: #fff;
+$copl: #000;
+
+$s1: 400px;
+$s2: 200px;
+$s3: 100px;
+$s4: 50px;
 
 // Google Fonts
 @import url(https://fonts.googleapis.com/css?family=Oxanium|Roboto&display=swap);
 
 // Font Variables
-$header-font: 'Oxanium', serif;
-$normal-font: 'Roboto', sans-serif;
+$f1: 'Oxanium', serif;
+$f2: 'Roboto', sans-serif;
 
 // RESET
 * {
@@ -20,21 +25,106 @@ $normal-font: 'Roboto', sans-serif;
 
 body {
   box-sizing: border-box;
-  font-family: $normal-font;
+  font-family: $f2;
+  line-height: 2;
 }
 
 h1,
 h2,
 h3 {
-  font-family: $header-font;
+  font-family: $f1;
   font-weight: normal;
+  font-size: 3rem;
 }
 
-//
+h1 {
+  font-size: 4rem;
+}
+h2 {
+  font-size: 2rem;
+  background-color: $cpd;
+  color: $cop;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: $cpd;
+}
+
+button {
+  font-family: $f2;
+  border: none;
+  background-color: transparent;
+  color: $cop;
+}
+
+.col {
+  border: 1px solid $cpd;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+// CSS
+.header {
+  a {
+    color: $cop;
+  }
+  // display: flex;
+  // flex-direction: row;
+  // align-items: center;
+
+  padding: $s4;
+  h1 {
+    font-size: 5rem;
+    // font-weight: bold;
+  }
+  background-color: $cp;
+  color: $cop;
+}
+
+.wrapper {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  .assets-and-graph,
+  .history-and-graph {
+    margin: $s1 0 $s2;
+    border: 1px solid;
+  }
+
+  .assets-and-graph {
+    margin-top: 0;
+
+    .cpl {
+      margin-top: $s2;
+      background-color: $cpl;
+    }
+
+    .add-asset {
+      background-color: $cpl;
+      min-height: $s2;
+    }
+    h2 {
+      margin: $s2 0 $s3;
+    }
+    .wallet-graph {
+      //background-color: $cop;
+    }
+  }
+  .history-and-graph {
+  }
+}
 
 li span.remove-asset {
   display: none;
-  color: $conp;
+  color: $cp;
 }
 
 li:hover span.remove-asset {
