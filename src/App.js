@@ -21,15 +21,17 @@ function App() {
         <Nav />
         <div className='wrapper'>
           <Switch>
-            <div className='assets-and-graph'>
-              <Route path='/présentation-crypto-wallet'>
+            <Route path='/présentation-crypto-wallet'>
+              <div className='assets-and-graph'>
                 <PublicPage />
-              </Route>
+              </div>
+            </Route>
 
-              <Route path='/login'>
+            <Route path='/login'>
+              <div className='assets-and-graph'>
                 <LoginPage />
-              </Route>
-            </div>
+              </div>
+            </Route>
 
             <PrivateRoute path='/'>
               <div className='assets-and-graph'>
