@@ -5,7 +5,9 @@ import { Line } from 'react-chartjs-2';
 export const HistoryGraph = () => {
   const { uid } = useStoreState(state => state.user);
   const { currentTotal, history } = useStoreState(state => state.wallet);
-  const { saveToHistoryDB } = useStoreActions(state => state.wallet);
+  const { saveToHistoryDB, removeFromHistoryDB } = useStoreActions(
+    state => state.wallet
+  );
 
   const data = {
     datasets: [
@@ -44,8 +46,13 @@ export const HistoryGraph = () => {
     saveToHistoryDB(payload);
   };
 
-  const handleRemoveFromHistory = () => {
-    console.log('handleRemoveFromHistory');
+  const handleRemoveFromHistory = event => {
+    const eventId = event.target.parentNode.dataset.eventid;
+
+    removeFromHistoryDB({
+      uid,
+      eventId
+    });
   };
 
   return (
@@ -55,9 +62,8 @@ export const HistoryGraph = () => {
       <ul>
         {history &&
           history.map(event => (
-            <li key={event.key}>
-              <span>{typeof event.key}</span>
-              <span onClick={handleRemoveFromHistory}>X</span>
+            <li key={event.key} data-eventid={event.eventId}>
+              <span onClick={event => handleRemoveFromHistory(event)}>X</span>
               <span> </span>
               <span>{event.date}</span>
               <span> </span>

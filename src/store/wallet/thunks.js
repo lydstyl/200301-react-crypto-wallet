@@ -127,6 +127,21 @@ export const thunks = {
       });
   }),
 
+  removeFromHistoryDB: thunk(async (actions, payload) => {
+    firestore
+      .collection(`users/${payload.uid}/history`)
+      .doc(payload.eventId)
+      .delete()
+      .then(function() {
+        console.log('Document successfully deleted!');
+
+        actions.removeFromHistory(payload.eventId);
+      })
+      .catch(function(error) {
+        console.error('Error removing document: ', error);
+      });
+  }),
+
   getHistoryFromDB: thunk(async (actions, payload) => {
     const history = [];
 
@@ -137,6 +152,8 @@ export const thunks = {
       .then(querySnapshot => {
         querySnapshot.docs.forEach(queryDocumentSnapshot => {
           const T = queryDocumentSnapshot.data();
+
+          T.eventId = queryDocumentSnapshot.id;
 
           history.push(T);
         });

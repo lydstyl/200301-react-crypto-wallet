@@ -100,17 +100,23 @@ export const actions = {
     state.walletGraphData = walletGraphData;
   }),
 
-  addToHistory: action((state, { savedAtFr, walletTotal }) => {
+  addToHistory: action((state, { savedAtEn, savedAtFr, walletTotal }) => {
     state.history.push({
+      key: savedAtEn,
       date: savedAtFr,
       usdValue: walletTotal
     });
   }),
 
+  removeFromHistory: action((state, payload) => {
+    state.history = state.history.filter(event => event.eventId !== payload);
+  }),
+
   setHistoryToStore: action((state, payload) => {
     const history = payload.map(event => ({
+      eventId: event.eventId,
+      key: event.savedAtEn,
       date: event.savedAtFr,
-      // date: event.savedAtEn,
       usdValue: event.walletTotal
     }));
 
