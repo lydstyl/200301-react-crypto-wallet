@@ -33,18 +33,18 @@ export const thunks = {
       })
       .then(function(docRef) {
         console.log('Document written with ID: ', docRef.id);
+
+        actions.addAsset(payload.toAdd);
+
+        payload.assets[payload.toAdd.symbol.toUpperCase()] = {
+          balance: payload.toAdd.balance
+        };
+
+        actions.updateAssetsWithPrices(payload.assets);
       })
       .catch(function(error) {
         console.error('Error adding document: ', error);
       });
-
-    // actions.addAsset(payload.toAdd);
-
-    // payload.assets[payload.toAdd.symbol.toUpperCase()] = {
-    //   balance: payload.toAdd.balance
-    // };
-
-    // actions.updateAssetsWithPrices(payload.assets);
   }),
 
   deleteAsset: thunk(async (actions, payload) => {
@@ -54,8 +54,7 @@ export const thunks = {
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, ' => ', doc.data());
+          //console.log(doc.id, ' => ', doc.data());
 
           firestore
             .collection(`users/${payload.uid}/assets`)
@@ -63,6 +62,10 @@ export const thunks = {
             .delete()
             .then(function() {
               console.log('Document successfully deleted!');
+
+              delete payload.assets[payload.cryptoToRemove];
+
+              actions.updateAssetsWithPrices(payload.assets);
             })
             .catch(function(error) {
               console.error('Error removing document: ', error);
@@ -72,10 +75,6 @@ export const thunks = {
       .catch(function(error) {
         console.log('Error getting documents: ', error);
       });
-
-    // delete payload.assets[payload.cryptoToRemove];
-
-    // actions.updateAssetsWithPrices(payload.assets);
   }),
 
   saveAssetsToFirebase: thunk(async (actions, payload) => {
