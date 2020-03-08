@@ -10,10 +10,27 @@ export const AddAsset = () => {
   const { uid, email } = useStoreState(state => state.user);
   const assets = useStoreState(state => state.wallet.assets);
 
-  const addOneAsset = useStoreActions(actions => actions.wallet.addOneAsset);
+  const { addOneAsset } = useStoreActions(actions => actions.wallet);
 
   const handleSymbolChange = event => {
-    if (event.target.value.length > 2) {
+    const inputSymbol = event.target.value;
+
+    if (inputSymbol.length > 2) {
+      let symbolExistInPage = false;
+
+      document.querySelectorAll('.symbol').forEach(symbolNode => {
+        const symbol = symbolNode.innerText;
+
+        if (inputSymbol.toUpperCase() === symbol) {
+          symbolExistInPage = true;
+        }
+      });
+
+      if (symbolExistInPage) {
+        setShowButton(false);
+        return;
+      }
+
       setShowButton(true);
       setSymbol(event.target.value);
     }
@@ -65,7 +82,7 @@ export const AddAsset = () => {
         placeholder='balance'
       />
 
-      {showButton && <button onClick={() => handleAddAsset()}>Add</button>}
+      {showButton && <button onClick={handleAddAsset}>Add</button>}
     </div>
   );
 };

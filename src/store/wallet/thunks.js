@@ -54,8 +54,6 @@ export const thunks = {
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          //console.log(doc.id, ' => ', doc.data());
-
           firestore
             .collection(`users/${payload.uid}/assets`)
             .doc(doc.id)
