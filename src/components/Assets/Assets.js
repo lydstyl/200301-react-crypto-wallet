@@ -54,7 +54,7 @@ export const Assets = () => {
       <ul className='assets not-counted'>{notCounted}</ul>
 
       <h3>
-        Prix trouvé. Total = {Math.round(currentTotal).toLocaleString('fr')}$
+        Prix trouvés. Total = {Math.round(currentTotal).toLocaleString('fr')}$
       </h3>
       <ul className='assets counted'>{counted}</ul>
     </>

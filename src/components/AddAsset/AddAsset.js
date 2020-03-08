@@ -70,20 +70,32 @@ export const AddAsset = () => {
   return (
     <div className='add-asset'>
       <h2>Mon portefeuille</h2>
-      <input
-        className='symbol'
-        onChange={handleSymbolChange}
-        type='text'
-        placeholder='BTC or XRP or...'
-      />
-      <input
-        className='balance'
-        onChange={handleBalanceChange}
-        type='number'
-        placeholder='balance'
-      />
 
-      {showButton && <button onClick={handleAddAsset}>Add</button>}
+      <form>
+        <div className='field'>
+          <input
+            className='symbol'
+            onChange={handleSymbolChange}
+            type='text'
+            placeholder='BTC or XRP or...'
+          />
+        </div>
+
+        <div className='field'>
+          <input
+            className='balance'
+            onChange={handleBalanceChange}
+            type='number'
+            placeholder='balance'
+          />
+        </div>
+
+        {showButton && (
+          <div className='field'>
+            <button onClick={handleAddAsset}>Ajouter</button>
+          </div>
+        )}
+      </form>
     </div>
   );
 };

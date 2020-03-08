@@ -45,16 +45,18 @@ export const Nav = () => {
   return (
     <nav className='header'>
       <h1>Crypto Wallet</h1>
-      <ul>
-        <li>
-          <Link to='/présentation-crypto-wallet'>Présentation</Link>
-        </li>
-        <li>
-          <Link to='/'>Mon portefeuille</Link>
-        </li>
-      </ul>
+      <div className='container'>
+        <ul>
+          <li>
+            <Link to='/présentation-crypto-wallet'>Présentation</Link>
+          </li>
+          <li>
+            <Link to='/'>Mon portefeuille</Link>
+          </li>
+        </ul>
 
-      <LoginWithGoogle />
+        <LoginWithGoogle />
+      </div>
     </nav>
   );
 };
