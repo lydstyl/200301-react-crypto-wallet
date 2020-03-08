@@ -1,4 +1,5 @@
 import { thunk } from 'easy-peasy';
+import { firestore } from '../../firebase/firebase';
 
 export const thunks = {
   deleteAsset: thunk(async (actions, payload) => {
@@ -6,15 +7,34 @@ export const thunks = {
 
     actions.updateAssetsWithPrices(payload.assets);
   }),
+
   addOneAsset: thunk(async (actions, payload) => {
-    actions.addAsset(payload.toAdd);
+    // add assets in the user in the db
+    firestore
+      .collection(`users/${payload.user.uid}/assets`)
+      .add({
+        ...payload.toAdd // contain symbol and balance
+      })
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function(error) {
+        console.error('Error adding document: ', error);
+      });
 
-    payload.assets[payload.toAdd.symbol.toUpperCase()] = {
-      balance: payload.toAdd.balance
-    };
+    // actions.addAsset(payload.toAdd);
 
-    actions.updateAssetsWithPrices(payload.assets);
+    // payload.assets[payload.toAdd.symbol.toUpperCase()] = {
+    //   balance: payload.toAdd.balance
+    // };
+
+    // actions.updateAssetsWithPrices(payload.assets);
   }),
+
+  saveAssetsToFirebase: thunk(async (actions, payload) => {
+    console.log('saveAssetsToFirebase');
+  }),
+
   updateAssetsWithPrices: thunk(async (actions, payload) => {
     actions.setLoading(true);
 
@@ -43,6 +63,9 @@ export const thunks = {
 
     actions.setSortedAssets(newAssets);
 
+    // à quelle moment sauver les assets dans firebase ?
+    console.log('newAssets', newAssets);
+
     actions.addTotal();
 
     actions.addWalletGraphData();
@@ -52,5 +75,16 @@ export const thunks = {
     //actions.addPercent();
 
     actions.setLoading(false);
+  }),
+
+  set1BTC: thunk(async (actions, payload) => {
+    console.log('thunk set1BTC', payload);
+
+    //state.assets[payload.symbol.toUpperCase()] = { balance: payload.balance };
+    actions.addAsset({ symbol: 'btc', balance: 1 });
+
+    // delete payload.assets[payload.cryptoToRemove];
+
+    // actions.updateAssetsWithPrices(payload.assets);
   })
 };
