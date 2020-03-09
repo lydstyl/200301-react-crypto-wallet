@@ -109,6 +109,8 @@ li {
       justify-content: space-between;
 
       img {
+        width: 96px;
+        height: 96px;
         border-radius: 50%;
         border: 5px solid;
       }
@@ -146,9 +148,18 @@ li {
   width: 100%;
   margin: 0 0;
 
+  .del,
+  .remove-asset {
+    cursor: pointer;
+  }
+
   .assets-and-graph,
   .history-and-graph {
     margin: $s1 0 $s2;
+
+    button {
+      cursor: pointer;
+    }
 
     [data-eventid] {
       font-size: 1.3rem;
@@ -175,6 +186,9 @@ li {
       button {
         font-size: 2rem;
       }
+      button:hover {
+        cursor: pointer;
+      }
     }
 
     .add-asset {
@@ -199,6 +213,9 @@ li {
         button {
           margin: 40px;
           font-size: 2rem;
+        }
+        button:hover {
+          cursor: pointer;
         }
       }
 
