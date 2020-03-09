@@ -144,12 +144,23 @@ li {
 
 .wrapper {
   width: 100%;
-  //max-width: 1000px;
   margin: 0 0;
 
   .assets-and-graph,
   .history-and-graph {
     margin: $s1 0 $s2;
+
+    [data-eventid] {
+      font-size: 1.3rem;
+
+      .del {
+        display: none;
+        color: $cp;
+      }
+    }
+    [data-eventid]:hover .del {
+      display: inline;
+    }
   }
 
   .assets-and-graph {
@@ -205,6 +216,7 @@ li {
       li {
         min-height: 40px;
         margin-bottom: 40px;
+        font-size: 1.3rem;
       }
     }
 

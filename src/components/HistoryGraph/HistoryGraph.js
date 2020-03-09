@@ -12,21 +12,11 @@ export const HistoryGraph = () => {
   const data = {
     datasets: [
       {
-        // data: [
-        //   {
-        //     x: 0,
-        //     y: 5
-        //   },
-        //   {
-        //     x: 10,
-        //     y: 8
-        //   },
-        //   {
-        //     x: 12,
-        //     y: 20
-        //   }
-        // data: [5, 8, 20]
-        data: history.map(instant => instant.usdValue)
+        data: history.map(instant => instant.usdValue),
+        label: 'Variation du portefeuille en $ au cours du temps',
+        borderColor: '#9c27b0',
+        backgroundColor: '#d05ce3',
+        hoverBackgroundColor: '#9c27b0'
       }
     ],
 
@@ -68,11 +58,16 @@ export const HistoryGraph = () => {
         {history &&
           history.map(event => (
             <li key={event.key} data-eventid={event.eventId}>
-              <span onClick={event => handleRemoveFromHistory(event)}>X</span>
+              <span
+                className='del'
+                onClick={event => handleRemoveFromHistory(event)}
+              >
+                X
+              </span>
               <span> </span>
               <span>{event.date}</span>
               <span> </span>
-              <span>{event.usdValue}</span>
+              <span>{event.usdValue.toLocaleString('fr')} $</span>
             </li>
           ))}
       </ul>

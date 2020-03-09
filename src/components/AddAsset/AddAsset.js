@@ -13,6 +13,8 @@ export const AddAsset = () => {
   const { addOneAsset } = useStoreActions(actions => actions.wallet);
 
   const handleSymbolChange = event => {
+    setShowButton(false);
+
     const inputSymbol = event.target.value;
 
     if (inputSymbol.length > 2) {
@@ -86,7 +88,7 @@ export const AddAsset = () => {
             className='balance'
             onChange={handleBalanceChange}
             type='number'
-            placeholder='balance'
+            placeholder='Montant à ajouter'
           />
         </div>
 

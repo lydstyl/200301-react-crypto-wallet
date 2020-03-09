@@ -9,7 +9,9 @@ export const WalletGraph = () => {
     datasets: [
       {
         data: walletGraphData.numbers,
-        backgroundColor: walletGraphData.backgroundColor
+        backgroundColor: walletGraphData.backgroundColor,
+        hoverBackgroundColor: '#9c27b0',
+        hoverBorderColor: '#d05ce3'
       }
     ],
 
