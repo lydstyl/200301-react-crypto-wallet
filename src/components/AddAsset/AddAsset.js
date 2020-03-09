@@ -88,7 +88,7 @@ export const AddAsset = () => {
             className='balance'
             onChange={handleBalanceChange}
             type='number'
-            placeholder='Montant à ajouter'
+            placeholder='Quantité à ajouter'
           />
         </div>
 
