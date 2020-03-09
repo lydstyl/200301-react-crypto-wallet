@@ -81,6 +81,50 @@ li {
 }
 
 // CSS
+.presentation {
+  p {
+    padding: 0 50px 50px;
+  }
+  iframe {
+    display: block;
+    margin: auto;
+    margin-top: $s3;
+    border-radius: 5px;
+  }
+}
+@media screen and (min-width: '768px') {
+  .presentation {
+    iframe {
+      width: 560px;
+      height: 315px;
+    }
+  }
+}
+@media screen and (min-width: '1024px') {
+  .presentation {
+    .flexer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .txt {
+        max-width: 500px;
+      }
+
+      iframe {
+        margin-top: 0;
+        margin-right: 50px;
+      }
+    }
+  }
+}
+@media screen and (min-width: '1024px') {
+  .presentation .flexer iframe {
+    margin-right: 0;
+  }
+}
+
 .header {
   padding: $s4;
   background-color: $cp;
