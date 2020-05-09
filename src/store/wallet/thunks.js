@@ -81,8 +81,14 @@ export const thunks = {
   updateAssetsWithPrices: thunk(async (actions, payload) => {
     actions.setLoading(true);
 
-    let response = await fetch(`https://api.coincap.io/v2/assets`);
+    let response = await fetch(`https://api.coincap.io/v2/assets/bitcoin`);
     let datas = await response.json();
+
+    const btcPriceUsd = datas.data.priceUsd;
+    actions.setBtcPriceUsd(btcPriceUsd);
+
+    response = await fetch(`https://api.coincap.io/v2/assets`);
+    datas = await response.json();
 
     const availableAPISymbols = datas.data.map((crypto) => crypto.symbol);
 
@@ -101,8 +107,12 @@ export const thunks = {
     });
 
     datas.data.forEach((crypto) => {
+      const btcPrice = parseFloat(crypto.priceUsd / btcPriceUsd);
       if (cryptos.includes(crypto.symbol)) {
         newAssets[crypto.symbol].usdPrice = parseFloat(crypto.priceUsd);
+        newAssets[crypto.symbol].btcPrice = btcPrice;
+        newAssets[crypto.symbol].btcValue =
+          btcPrice * newAssets[crypto.symbol].balance;
       }
     });
 

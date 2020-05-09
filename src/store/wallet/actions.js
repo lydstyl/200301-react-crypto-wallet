@@ -8,6 +8,10 @@ export const actions = {
     }
   }),
 
+  setBtcPriceUsd: action((state, payload) => {
+    state.btcPriceUsd = payload;
+  }),
+
   addAsset: action((state, payload) => {
     state.assets[payload.symbol.toUpperCase()] = { balance: payload.balance };
   }),
@@ -28,11 +32,11 @@ export const actions = {
     const cryptos = Object.keys(payload);
     const sortedAssets = {
       notCounted: [],
-      counted: []
+      counted: [],
     };
 
-    cryptos.forEach(crypto => {
-      const { balance, usdPrice } = payload[crypto];
+    cryptos.forEach((crypto) => {
+      const { balance, usdPrice, btcValue } = payload[crypto];
 
       const randomColor =
         'rgba(' +
@@ -49,13 +53,14 @@ export const actions = {
           balance,
           usdPrice,
           usdValue: balance * usdPrice,
-          randomColor
+          btcValue,
+          randomColor,
         });
       } else {
         sortedAssets.notCounted.push({
           label: crypto,
           balance,
-          randomColor
+          randomColor,
         });
       }
     });
@@ -73,24 +78,25 @@ export const actions = {
     state.sortedAssets = sortedAssets;
   }),
 
-  addTotal: action(state => {
+  addTotal: action((state) => {
     let total = 0;
 
-    state.sortedAssets.counted.forEach(asset => {
+    state.sortedAssets.counted.forEach((asset) => {
       total += asset.usdValue;
     });
 
-    state.currentTotal = total;
+    state.currentTotal = total; // total in usd
+    state.currentBTCTotal = total / state.btcPriceUsd; // total in btc
   }),
 
-  addWalletGraphData: action(state => {
+  addWalletGraphData: action((state) => {
     const walletGraphData = {
       labels: [],
       numbers: [],
-      backgroundColor: []
+      backgroundColor: [],
     };
 
-    state.sortedAssets.counted.forEach(asset => {
+    state.sortedAssets.counted.forEach((asset) => {
       const { label, usdValue } = asset;
       walletGraphData.labels.push(label);
       walletGraphData.numbers.push(usdValue);
@@ -104,22 +110,22 @@ export const actions = {
     state.history.push({
       key: savedAtEn,
       date: savedAtFr,
-      usdValue: walletTotal
+      usdValue: walletTotal,
     });
   }),
 
   removeFromHistory: action((state, payload) => {
-    state.history = state.history.filter(event => event.eventId !== payload);
+    state.history = state.history.filter((event) => event.eventId !== payload);
   }),
 
   setHistoryToStore: action((state, payload) => {
-    const history = payload.map(event => ({
+    const history = payload.map((event) => ({
       eventId: event.eventId,
       key: event.savedAtEn,
       date: event.savedAtFr,
-      usdValue: event.walletTotal
+      usdValue: event.walletTotal,
     }));
 
     state.history = history;
-  })
+  }),
 };

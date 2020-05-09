@@ -23,7 +23,7 @@ export const WalletGraph = () => {
       <h2>Graphique des cryptos dont le prix a été trouvé</h2>
 
       <div className='dughnut'>
-        <Doughnut data={walletGraphData} width='100' />
+        <Doughnut data={walletGraphData} width={100} />
       </div>
     </div>
   );

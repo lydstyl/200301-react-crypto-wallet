@@ -3,25 +3,25 @@ import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export const Assets = () => {
-  const { uid } = useStoreState(state => state.user);
-  const { assets, sortedAssets, currentTotal } = useStoreState(
-    state => state.wallet
+  const { uid } = useStoreState((state) => state.user);
+  const { assets, sortedAssets, currentTotal, currentBTCTotal } = useStoreState(
+    (state) => state.wallet
   );
 
-  const deleteAsset = useStoreActions(actions => actions.wallet.deleteAsset);
+  const deleteAsset = useStoreActions((actions) => actions.wallet.deleteAsset);
 
-  const handleRemoveAsset = event => {
+  const handleRemoveAsset = (event) => {
     const payload = {
       cryptoToRemove: event.target.parentNode.querySelector('.symbol')
         .innerText,
       assets,
-      uid
+      uid,
     };
 
     deleteAsset(payload); // this is a thunk
   };
 
-  const notCounted = sortedAssets.notCounted.map(asset => (
+  const notCounted = sortedAssets.notCounted.map((asset) => (
     <li key={asset.label}>
       <span className='remove-asset' onClick={handleRemoveAsset}>
         X
@@ -31,7 +31,7 @@ export const Assets = () => {
     </li>
   ));
 
-  const counted = sortedAssets.counted.map(asset => (
+  const counted = sortedAssets.counted.map((asset) => (
     <li
       key={asset.label}
       style={{ borderBottom: `6px solid ${asset.randomColor}` }}
@@ -43,7 +43,8 @@ export const Assets = () => {
       <span className='value'>
         : <span className='balance'>{asset.balance}</span> *{' '}
         {asset.usdPrice.toString().substring(0, 7)} ={' '}
-        {Math.round(asset.usdValue).toLocaleString('fr')}
+        {Math.round(asset.usdValue).toLocaleString('fr')} (
+        {asset.btcValue.toFixed(3)})
       </span>
     </li>
   ));
@@ -51,7 +52,8 @@ export const Assets = () => {
   return (
     <div className='box'>
       <h3>
-        Prix trouvés. Total = {Math.round(currentTotal).toLocaleString('fr')}$
+        Prix trouvés. Total = {Math.round(currentTotal).toLocaleString('fr')} ${' '}
+        ({currentBTCTotal && currentBTCTotal.toFixed(3)} BTC)
       </h3>
       <ul className='assets counted'>{counted}</ul>
 
