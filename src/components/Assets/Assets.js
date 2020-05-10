@@ -43,8 +43,10 @@ export const Assets = () => {
       <span className='value'>
         : <span className='balance'>{asset.balance}</span> *{' '}
         {asset.usdPrice.toString().substring(0, 7)} ={' '}
-        {Math.round(asset.usdValue).toLocaleString('fr')} (
-        {asset.btcValue && asset.btcValue.toFixed(3)})
+        {Math.round(asset.usdValue).toLocaleString('fr')}{' '}
+        {asset.btcValue &&
+          `(
+        ${asset.btcValue && asset.btcValue.toFixed(3)})`}
       </span>
     </li>
   ));
