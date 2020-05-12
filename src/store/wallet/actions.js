@@ -107,8 +107,9 @@ export const actions = {
   }),
 
   addToHistory: action(
-    (state, { savedAtEn, savedAtFr, walletTotal, walletBtcTotal }) => {
+    (state, { eventId, savedAtEn, savedAtFr, walletTotal, walletBtcTotal }) => {
       state.history.push({
+        eventId,
         key: savedAtEn,
         date: savedAtFr,
         usdValue: walletTotal,

@@ -22,7 +22,7 @@ export const HistoryGraph = () => {
       },
       {
         data: history.map((instant) => (instant.btcValue * 10000).toFixed(0)),
-        label: 'Variation du portefeuille en BTC / 10 000',
+        label: 'Variation du portefeuille en BTC * 10 000',
         borderColor: '#6a0080',
       },
     ],
@@ -34,6 +34,7 @@ export const HistoryGraph = () => {
     const now = new Date();
 
     const payload = {
+      eventId: 'tmpID',
       uid,
       savedAtEn: Date.parse(now),
       savedAtFr: now.toLocaleDateString('fr-FR'),
