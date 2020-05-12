@@ -106,13 +106,16 @@ export const actions = {
     state.walletGraphData = walletGraphData;
   }),
 
-  addToHistory: action((state, { savedAtEn, savedAtFr, walletTotal }) => {
-    state.history.push({
-      key: savedAtEn,
-      date: savedAtFr,
-      usdValue: walletTotal,
-    });
-  }),
+  addToHistory: action(
+    (state, { savedAtEn, savedAtFr, walletTotal, walletBtcTotal }) => {
+      state.history.push({
+        key: savedAtEn,
+        date: savedAtFr,
+        usdValue: walletTotal,
+        btcValue: walletBtcTotal,
+      });
+    }
+  ),
 
   removeFromHistory: action((state, payload) => {
     state.history = state.history.filter((event) => event.eventId !== payload);
@@ -124,6 +127,7 @@ export const actions = {
       key: event.savedAtEn,
       date: event.savedAtFr,
       usdValue: event.walletTotal,
+      btcValue: event.walletBtcTotal,
     }));
 
     state.history = history;

@@ -4,5 +4,5 @@ Add your crypto assets and have a global vision of your wallet with an history.
 
 TODO
 
-- add btc wallet value in history
 - add % in donut
+- add multiple source BTC and alts

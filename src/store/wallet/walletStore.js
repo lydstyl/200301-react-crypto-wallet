@@ -8,5 +8,5 @@ export const walletStore = {
 
   ...actions,
 
-  ...thunks
+  ...thunks,
 };
