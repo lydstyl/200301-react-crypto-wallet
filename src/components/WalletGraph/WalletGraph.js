@@ -4,11 +4,17 @@ import { Doughnut } from 'react-chartjs-2';
 import { useStoreState } from 'easy-peasy';
 
 export const WalletGraph = () => {
+  const { currentTotal } = useStoreState((state) => state.wallet);
   let walletGraphData = useStoreState((state) => state.wallet.walletGraphData);
+
   walletGraphData = {
     datasets: [
       {
-        data: walletGraphData.numbers,
+        data: walletGraphData.numbers.map((n) => {
+          let percent = (n / currentTotal) * 100;
+          if (!percent * 0 === 0) percent = parseFloat(percent).toFixed(0);
+          return percent;
+        }),
         backgroundColor: walletGraphData.backgroundColor,
         hoverBackgroundColor: '#9c27b0',
         hoverBorderColor: '#d05ce3',
