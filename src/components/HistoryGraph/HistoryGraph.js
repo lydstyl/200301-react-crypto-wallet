@@ -61,7 +61,9 @@ export const HistoryGraph = () => {
         Sauver le portefeuille dans l'historique
       </button>
 
+    <div className='line-box'>
       <Line data={data} />
+    </div>
 
       <ul>
         {history &&

@@ -9,6 +9,8 @@ $s1: 400px;
 $s2: 200px;
 $s3: 100px;
 $s4: 50px;
+$s2: 25px;
+$s1: 12px;
 
 // Google Fonts
 @import url(https://fonts.googleapis.com/css?family=Oxanium|Roboto&display=swap);
@@ -283,9 +285,12 @@ li {
     }
 
     .wallet-graph {
-      //background-color: $cop;
+      .dughnut{
+        padding: 0 $s1;
+      }
     }
   }
+
   .history-and-graph {
     h2 {
       margin: $s2 0 $s3;
@@ -296,8 +301,12 @@ li {
       font-size: 2rem;
     }
 
-    canvas {
-      margin-bottom: $s3;
+    .line-box{
+      padding: 0 $s1;
+
+      canvas {
+        margin-bottom: $s3;
+      }
     }
 
     ul {
