@@ -1,26 +1,26 @@
-import { thunk } from 'easy-peasy';
-import { firestore } from '../../firebase/firebase';
+import { thunk } from 'easy-peasy'
+import { firestore } from '../../firebase/firebase'
 
 export const thunks = {
   setInitialWallet: thunk(async (actions, payload) => {
-    const initialAssets = {};
+    const initialAssets = {}
 
     firestore
       .collection(`users/${payload}/assets`)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.docs.forEach((queryDocumentSnapshot) => {
-          const T = queryDocumentSnapshot.data();
+      .then(querySnapshot => {
+        querySnapshot.docs.forEach(queryDocumentSnapshot => {
+          const T = queryDocumentSnapshot.data()
 
-          initialAssets[T.symbol] = { balance: T.balance };
-        });
+          initialAssets[T.symbol] = { balance: T.balance }
+        })
 
-        actions.getHistoryFromDB(payload);
+        actions.getHistoryFromDB(payload)
 
-        actions.setInitialAssets(initialAssets);
+        actions.setInitialAssets(initialAssets)
 
-        actions.updateAssetsWithPrices(initialAssets);
-      });
+        actions.updateAssetsWithPrices(initialAssets)
+      })
   }),
 
   addOneAsset: thunk(async (actions, payload) => {
@@ -31,19 +31,19 @@ export const thunks = {
         ...payload.toAdd, // contain symbol and balance
       })
       .then(function (docRef) {
-        console.log('Document written with ID: ', docRef.id);
+        console.log('Document written with ID: ', docRef.id)
 
-        actions.addAsset(payload.toAdd);
+        actions.addAsset(payload.toAdd)
 
         payload.assets[payload.toAdd.symbol.toUpperCase()] = {
           balance: payload.toAdd.balance,
-        };
+        }
 
-        actions.updateAssetsWithPrices(payload.assets);
+        actions.updateAssetsWithPrices(payload.assets)
       })
       .catch(function (error) {
-        console.error('Error adding document: ', error);
-      });
+        console.error('Error adding document: ', error)
+      })
   }),
 
   deleteAsset: thunk(async (actions, payload) => {
@@ -58,73 +58,76 @@ export const thunks = {
             .doc(doc.id)
             .delete()
             .then(function () {
-              console.log('Document successfully deleted!');
+              console.log('Document successfully deleted!')
 
-              delete payload.assets[payload.cryptoToRemove];
+              delete payload.assets[payload.cryptoToRemove]
 
-              actions.updateAssetsWithPrices(payload.assets);
+              actions.updateAssetsWithPrices(payload.assets)
             })
             .catch(function (error) {
-              console.error('Error removing document: ', error);
-            });
-        });
+              console.error('Error removing document: ', error)
+            })
+        })
       })
       .catch(function (error) {
-        console.log('Error getting documents: ', error);
-      });
+        console.log('Error getting documents: ', error)
+      })
   }),
 
   saveAssetsToFirebase: thunk(async (actions, payload) => {
-    console.log('saveAssetsToFirebase');
+    console.log('saveAssetsToFirebase')
   }),
 
   updateAssetsWithPrices: thunk(async (actions, payload) => {
-    actions.setLoading(true);
+    actions.setLoading(true)
 
-    let response = await fetch(`https://api.coincap.io/v2/assets/bitcoin`);
-    let datas = await response.json();
+    let response = await fetch(`https://api.coincap.io/v2/assets/bitcoin`)
+    let datas = await response.json()
 
-    const btcPriceUsd = datas.data.priceUsd;
-    actions.setBtcPriceUsd(btcPriceUsd);
+    const btcPriceUsd = datas.data.priceUsd
+    actions.setBtcPriceUsd(btcPriceUsd)
 
-    response = await fetch(`https://api.coincap.io/v2/assets`);
-    datas = await response.json();
+    console.log('datas.data.priceEur', datas.data.priceEur)
+    // actions.setBtcPriceUsd(datas.data.priceEur)
 
-    const availableAPISymbols = datas.data.map((crypto) => crypto.symbol);
+    response = await fetch(`https://api.coincap.io/v2/assets`)
+    datas = await response.json()
 
-    const cryptos = Object.keys(payload);
+    const availableAPISymbols = datas.data.map(crypto => crypto.symbol)
 
-    const newAssets = {};
-    cryptos.forEach((crypto) => {
-      newAssets[crypto] = payload[crypto];
+    const cryptos = Object.keys(payload)
+
+    const newAssets = {}
+    cryptos.forEach(crypto => {
+      newAssets[crypto] = payload[crypto]
       if (!availableAPISymbols.includes(crypto)) {
         if (crypto === 'USD') {
-          newAssets[crypto].usdPrice = 1;
+          newAssets[crypto].usdPrice = 1
         } else {
-          newAssets[crypto].usdPrice = 'non compté';
+          newAssets[crypto].usdPrice = 'non compté'
         }
       }
-    });
+    })
 
-    datas.data.forEach((crypto) => {
-      const btcPrice = parseFloat(crypto.priceUsd / btcPriceUsd);
+    datas.data.forEach(crypto => {
+      const btcPrice = parseFloat(crypto.priceUsd / btcPriceUsd)
       if (cryptos.includes(crypto.symbol)) {
-        newAssets[crypto.symbol].usdPrice = parseFloat(crypto.priceUsd);
-        newAssets[crypto.symbol].btcPrice = btcPrice;
+        newAssets[crypto.symbol].usdPrice = parseFloat(crypto.priceUsd)
+        newAssets[crypto.symbol].btcPrice = btcPrice
         newAssets[crypto.symbol].btcValue =
-          btcPrice * newAssets[crypto.symbol].balance;
+          btcPrice * newAssets[crypto.symbol].balance
       }
-    });
+    })
 
-    actions.setAssets(newAssets); // 👈 dispatch local actions to update state
+    actions.setAssets(newAssets) // 👈 dispatch local actions to update state
 
-    actions.setSortedAssets(newAssets);
+    actions.setSortedAssets(newAssets)
 
-    actions.addTotal();
+    actions.addTotal()
 
-    actions.addWalletGraphData();
+    actions.addWalletGraphData()
 
-    actions.setLoading(false);
+    actions.setLoading(false)
   }),
 
   saveToHistoryDB: thunk(async (actions, payload) => {
@@ -132,13 +135,13 @@ export const thunks = {
       .collection(`users/${payload.uid}/history`)
       .add(payload)
       .then(function (docRef) {
-        console.log('Document written with ID: ', docRef.id);
+        console.log('Document written with ID: ', docRef.id)
 
-        actions.addToHistory(payload);
+        actions.addToHistory(payload)
       })
       .catch(function (error) {
-        console.error('Error adding document: ', error);
-      });
+        console.error('Error adding document: ', error)
+      })
   }),
 
   removeFromHistoryDB: thunk(async (actions, payload) => {
@@ -147,32 +150,32 @@ export const thunks = {
       .doc(payload.eventId)
       .delete()
       .then(function () {
-        console.log('Document successfully deleted!');
+        console.log('Document successfully deleted!')
 
-        actions.removeFromHistory(payload.eventId);
+        actions.removeFromHistory(payload.eventId)
       })
       .catch(function (error) {
-        console.error('Error removing document: ', error);
-      });
+        console.error('Error removing document: ', error)
+      })
   }),
 
   getHistoryFromDB: thunk(async (actions, payload) => {
-    const history = [];
+    const history = []
 
     firestore
       .collection(`users/${payload}/history`)
       .orderBy('savedAtEn') // sort with the date can put 'desc' in second parameter if needed
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.docs.forEach((queryDocumentSnapshot) => {
-          const T = queryDocumentSnapshot.data();
+      .then(querySnapshot => {
+        querySnapshot.docs.forEach(queryDocumentSnapshot => {
+          const T = queryDocumentSnapshot.data()
 
-          T.eventId = queryDocumentSnapshot.id;
+          T.eventId = queryDocumentSnapshot.id
 
-          history.push(T);
-        });
+          history.push(T)
+        })
 
-        actions.setHistoryToStore(history);
-      });
+        actions.setHistoryToStore(history)
+      })
   }),
-};
+}
