@@ -74,10 +74,6 @@ export const thunks = {
       })
   }),
 
-  saveAssetsToFirebase: thunk(async (actions, payload) => {
-    console.log('saveAssetsToFirebase')
-  }),
-
   updateAssetsWithPrices: thunk(async (actions, payload) => {
     actions.setLoading(true)
 
@@ -87,7 +83,8 @@ export const thunks = {
     const btcPriceUsd = datas.data.priceUsd
     actions.setBtcPriceUsd(btcPriceUsd)
 
-    console.log('datas.data.priceEur', datas.data.priceEur)
+    // console.log('datas.data.priceEur', datas.data.priceEur)
+    // console.log('datas.data', datas.data)
     // actions.setBtcPriceUsd(datas.data.priceEur)
 
     response = await fetch(`https://api.coincap.io/v2/assets`)
@@ -128,6 +125,16 @@ export const thunks = {
     actions.addWalletGraphData()
 
     actions.setLoading(false)
+  }),
+
+  setEurPrice: thunk(async (action, payload) => {
+    try {
+      let response = await fetch(`https://api.exchangeratesapi.io/latest`)
+      let datas = await response.json()
+      console.log('datas', datas)
+    } catch (error) {
+      console.log('setEurPrice error', error)
+    }
   }),
 
   saveToHistoryDB: thunk(async (actions, payload) => {
