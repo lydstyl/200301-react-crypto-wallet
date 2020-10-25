@@ -10,4 +10,38 @@ h2 {
     color: black;
     border: 1px solid black;
   }
+
+  .add-account {
+    display: flex;
+    justify-content: center;
+
+    input {
+      max-width: 200px;
+    }
+
+    input,
+    button {
+      font-size: 1.5rem;
+    }
+  }
+
+  .account {
+    display: flex;
+    justify-content: space-between;
+    max-width: 238px;
+    margin: auto;
+
+    margin-top: 30px;
+    text-transform: uppercase;
+
+    label {
+      max-width: 100px;
+    }
+
+    .inputs {
+      input {
+        width: 80px;
+      }
+    }
+  }
 }

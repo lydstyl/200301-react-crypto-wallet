@@ -104,14 +104,16 @@ export const Calculator = () => {
               <div className='account' key={a.id}>
                 <label>{a.name}</label>
 
-                <input
-                  onChange={evt => handleChangeAccount(a, evt)}
-                  type='number'
-                  name={a.name}
-                  value={a.val}
-                />
+                <div className='inputs'>
+                  <input
+                    onChange={evt => handleChangeAccount(a, evt)}
+                    type='number'
+                    name={a.name}
+                    value={a.val}
+                  />
 
-                <button onClick={() => removeAccount(a.id)}>X</button>
+                  <button onClick={() => removeAccount(a.id)}>X</button>
+                </div>
               </div>
             ))
           ) : (
