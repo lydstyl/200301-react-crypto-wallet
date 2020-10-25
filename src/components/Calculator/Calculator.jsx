@@ -7,12 +7,7 @@ const getSum = arr => {
     return 0
   }
 
-  console.log('arr', arr)
-
   const reducer = (accumulator = 0, currentValue) => {
-    console.log('reducer -> accumulator', accumulator)
-    console.log('reducer -> currentValue.val', currentValue.val)
-
     return accumulator + currentValue.val
   }
 
@@ -21,9 +16,19 @@ const getSum = arr => {
   return sum
 }
 
+const getLocalAccounts = () => {
+  const accounts = localStorage.getItem('accounts')
+
+  return JSON.parse(accounts)
+}
+
+const setLocalAccounts = accounts => {
+  localStorage.setItem('accounts', JSON.stringify(accounts))
+}
+
 export const Calculator = () => {
   const [accountName, setAccountName] = useState('')
-  const [accounts, setAccounts] = useState([])
+  const [accounts, setAccounts] = useState(getLocalAccounts || [])
 
   const [total, setTotal] = useState(getSum(accounts))
 
@@ -33,12 +38,10 @@ export const Calculator = () => {
       { id: Date.now(), name: accountName, val: 0 },
     ].sort((a, b) => a.name - b.name)
 
-    console.log('Calculator -> newAccounts', newAccounts)
-
     setAccounts(newAccounts)
+    setLocalAccounts(newAccounts)
 
     const newTotal = getSum(newAccounts)
-    console.log('Calculator -> newTotal', newTotal)
 
     setTotal(newTotal)
 
@@ -49,6 +52,7 @@ export const Calculator = () => {
     const newAccounts = accounts.filter(a => a.id !== id)
 
     setAccounts(newAccounts)
+    setLocalAccounts(newAccounts)
 
     setTotal(getSum(newAccounts))
   }
@@ -61,6 +65,7 @@ export const Calculator = () => {
     newAccounts[index].val = +evt.target.value
 
     setAccounts(newAccounts)
+    setLocalAccounts(newAccounts)
 
     setTotal(getSum(newAccounts).toFixed(3))
   }
