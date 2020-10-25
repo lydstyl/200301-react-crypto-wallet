@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './Calculator.scss'
 
@@ -16,9 +16,19 @@ const getSum = arr => {
     return accumulator + currentValue.val
   }
 
-  const sum = arr.reduce(reducer, 0)
+  let sum = arr.reduce(reducer, 0)
 
-  return sum
+  sum = sum.toFixed(5)
+
+  const DECIMALS = 5
+
+  const coef = Math.pow(10, DECIMALS) // 100000 if DECIMALS = 5
+
+  sum = Math.floor(sum * coef)
+
+  sum = sum / coef
+
+  return sum.toFixed(DECIMALS)
 }
 
 const getLocalAccounts = () => {
@@ -43,12 +53,8 @@ export const Calculator = () => {
       { id: Date.now(), name: accountName, val: 0 },
     ].sort((a, b) => a.name - b.name)
 
-    setAccounts(newAccounts)
     setLocalAccounts(newAccounts)
-
-    const newTotal = getSum(newAccounts)
-
-    setTotal(newTotal)
+    setAccounts(newAccounts)
 
     setAccountName('')
   }
@@ -56,10 +62,8 @@ export const Calculator = () => {
   const removeAccount = id => {
     const newAccounts = accounts.filter(a => a.id !== id)
 
-    setAccounts(newAccounts)
     setLocalAccounts(newAccounts)
-
-    setTotal(getSum(newAccounts))
+    setAccounts(newAccounts)
   }
 
   const handleChangeAccount = (account, evt) => {
@@ -69,11 +73,13 @@ export const Calculator = () => {
 
     newAccounts[index].val = +evt.target.value
 
-    setAccounts(newAccounts)
     setLocalAccounts(newAccounts)
-
-    setTotal(getSum(newAccounts).toFixed(3))
+    setAccounts(newAccounts)
   }
+
+  useEffect(() => {
+    setTotal(getSum(accounts))
+  }, [accounts])
 
   return (
     <>
