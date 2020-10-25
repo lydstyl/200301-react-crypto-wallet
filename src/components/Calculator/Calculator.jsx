@@ -3,6 +3,11 @@ import React, { useState } from 'react'
 import './Calculator.scss'
 
 const getSum = arr => {
+  if (!arr) {
+    arr = []
+    localStorage.setItem('accounts', JSON.stringify(arr))
+  }
+
   if (!arr.length) {
     return 0
   }
@@ -28,9 +33,9 @@ const setLocalAccounts = accounts => {
 
 export const Calculator = () => {
   const [accountName, setAccountName] = useState('')
-  const [accounts, setAccounts] = useState(getLocalAccounts || [])
+  const [accounts, setAccounts] = useState(getLocalAccounts() || [])
 
-  const [total, setTotal] = useState(getSum(accounts))
+  const [total, setTotal] = useState(accounts ? 0 : getSum(accounts))
 
   const addAccount = _ => {
     const newAccounts = [
