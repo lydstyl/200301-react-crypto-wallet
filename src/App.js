@@ -1,18 +1,19 @@
-import React from 'react';
+import React from 'react'
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import { Nav } from './components/Nav/Nav';
+import { Nav } from './components/Nav/Nav'
 
-import { PublicPage } from './components/PublicPage/PublicPage';
-import { LoginPage } from './components/LoginPage/LoginPage';
-import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
-import { AddAsset } from './components/AddAsset/AddAsset';
-import { Assets } from './components/Assets/Assets';
-import { WalletGraph } from './components/WalletGraph/WalletGraph';
-import { HistoryGraph } from './components/HistoryGraph/HistoryGraph';
+import { PublicPage } from './components/PublicPage/PublicPage'
+import { LoginPage } from './components/LoginPage/LoginPage'
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute'
+import { AddAsset } from './components/AddAsset/AddAsset'
+import { Assets } from './components/Assets/Assets'
+import { WalletGraph } from './components/WalletGraph/WalletGraph'
+import { HistoryGraph } from './components/HistoryGraph/HistoryGraph'
+import { Calculator } from './components/Calculator/Calculator'
 
-import './App.scss';
+import './App.scss'
 
 function App() {
   return (
@@ -31,6 +32,12 @@ function App() {
               <div className='assets-and-graph'>
                 <LoginPage />
               </div>
+            </Route>
+
+            <Route path='/calculator'>
+              {/* <div className='assets-and-graph'> */}
+              <Calculator />
+              {/* </div> */}
             </Route>
 
             <PrivateRoute path='/'>
@@ -52,7 +59,7 @@ function App() {
         </div>
       </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

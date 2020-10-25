@@ -127,15 +127,15 @@ export const thunks = {
     actions.setLoading(false)
   }),
 
-  setEurPrice: thunk(async (action, payload) => {
-    try {
-      let response = await fetch(`https://api.exchangeratesapi.io/latest`)
-      let datas = await response.json()
-      console.log('datas', datas)
-    } catch (error) {
-      console.log('setEurPrice error', error)
-    }
-  }),
+  // setEurPrice: thunk(async (action, payload) => {
+  //   try {
+  //     let response = await fetch(`https://api.exchangeratesapi.io/latest`)
+  //     let datas = await response.json()
+  //     console.log('datas', datas)
+  //   } catch (error) {
+  //     console.log('setEurPrice error', error)
+  //   }
+  // }),
 
   saveToHistoryDB: thunk(async (actions, payload) => {
     firestore
