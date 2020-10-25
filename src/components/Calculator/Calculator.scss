@@ -1,3 +1,13 @@
-.calculator h2 {
+h2 {
   margin-top: 25px;
+}
+
+.calculator {
+  padding: 50px;
+
+  button {
+    padding: 1px 10px;
+    color: black;
+    border: 1px solid black;
+  }
 }
