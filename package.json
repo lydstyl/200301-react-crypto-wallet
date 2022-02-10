@@ -9,7 +9,7 @@
     "chart.js": "^2.9.3",
     "easy-peasy": "^3.3.0",
     "firebase": "^7.10.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.0",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.0",
